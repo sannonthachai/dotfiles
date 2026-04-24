@@ -24,10 +24,8 @@ Run `claude` once so `~/.claude/` is created.
 ### 2. Clone this repo
 
 ```bash
-git clone git@github.com:<your-username>/dotfiles.git ~/sannonthachai/dotfiles
+git clone git@github.com:sannonthachai/dotfiles.git ~/sannonthachai/dotfiles
 ```
-
-(Update the URL once the repo is pushed to GitHub.)
 
 ### 3. Link CLAUDE.md
 
