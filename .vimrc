@@ -335,7 +335,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType go      nnoremap <buffer> <leader>F :!gofmt -w %<CR>:e<CR>
 autocmd FileType sh,bash   nnoremap <buffer> <leader>F :!shfmt -w %<CR>:e<CR>
-autocmd FileType terraform nnoremap <buffer> <leader>F :!terraform fmt %<CR>:e<CR>
+autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :!terraform fmt %<CR>:e<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF (fuzzy finder)
