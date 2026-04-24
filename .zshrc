@@ -77,7 +77,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
+plugins=(git zsh-autosuggestions fast-syntax-highlighting)
+
+# Disable autosuggestions for large pastes (avoid per-char lookup)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+# Run autosuggestion fetch asynchronously — prompt doesn't block
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 source $ZSH/oh-my-zsh.sh
 
