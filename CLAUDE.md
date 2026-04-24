@@ -9,7 +9,11 @@ planned to expand into full vim/tmux/zsh/git dotfiles (see README.md).
 .claude/
 ├── CLAUDE.md        # global preferences, symlinked from ~/.claude/CLAUDE.md
 └── memory/          # auto-memory (read/written by Claude Code via autoMemoryDirectory)
+.config/
+└── alacritty/
+    └── alacritty.toml  # Alacritty terminal config (gruvbox light, JetBrainsMono NF)
 README.md
+CLAUDE.md            # this file — project-level context for anyone working IN this repo
 .gitignore
 ```
 
@@ -20,6 +24,8 @@ README.md
 - `.claude/memory/*.md` — typed memory entries (user / feedback / project /
   reference). Managed by Claude's auto-memory system. Don't hand-edit unless
   you know what you're doing; Claude writes here during normal conversations.
+- `.config/alacritty/alacritty.toml` — terminal config. On Windows, copy to
+  `%APPDATA%\alacritty\`. On Linux/macOS, symlink to `~/.config/alacritty/`.
 - `README.md` — human-facing setup instructions for new machines.
 - This file (`CLAUDE.md` at the repo root) — project-specific context for
   anyone working *in* this repo.
@@ -33,11 +39,14 @@ README.md
 
 ## Portability
 
-Config must work on both Linux and macOS:
+Config must work on both Linux and macOS (and Windows for terminal configs):
 - No hard-coded `/home/...` or `/Users/...` paths in committed files.
 - Use `~/` or `$HOME` in any paths the user runs manually.
 - `autoMemoryDirectory` in `~/.claude/settings.json` points Claude Code here
   regardless of OS, avoiding the default cwd-derived memory path.
+- Alacritty config: `%APPDATA%\alacritty\` on Windows vs `~/.config/alacritty/`
+  on Linux/macOS. The repo stores it under `.config/alacritty/`; on Windows,
+  copy rather than symlink (WSL ↔ Windows symlinks need admin).
 
 ## Future (Option B)
 
