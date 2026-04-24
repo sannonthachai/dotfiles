@@ -333,9 +333,12 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => External Formatters (fallback when CoC has no provider)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType go      nnoremap <buffer> <leader>F :w<CR>:!gofmt -w %<CR>:e<CR>
-autocmd FileType sh,bash nnoremap <buffer> <leader>F :w<CR>:!shfmt -w %<CR>:e<CR>
-autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :w<CR>:!terraform fmt %<CR>:e<CR>
+augroup ExternalFormatters
+  autocmd!
+  autocmd FileType go      nnoremap <buffer> <leader>F :w<CR>:!gofmt -w %<CR>:e<CR>
+  autocmd FileType sh,bash nnoremap <buffer> <leader>F :w<CR>:!shfmt -w %<CR>:e<CR>
+  autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :w<CR>:!terraform fmt %<CR>:e<CR>
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF (fuzzy finder)
@@ -392,13 +395,15 @@ autocmd! User vim-which-key call which_key#register(',', "g:which_key_map")
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Filetype detection
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufRead,BufNewFile *.tfvars set filetype=terraform
-
-" Ansible: treat YAML files in ansible directories as yaml.ansible
-autocmd BufNewFile,BufRead */playbooks/*.{yml,yaml} set filetype=yaml.ansible
-autocmd BufNewFile,BufRead */roles/**/*.{yml,yaml}  set filetype=yaml.ansible
-autocmd BufNewFile,BufRead */tasks/**/*.{yml,yaml}  set filetype=yaml.ansible
-autocmd BufNewFile,BufRead */handlers/**/*.{yml,yaml} set filetype=yaml.ansible
-autocmd BufNewFile,BufRead */group_vars/**/*.{yml,yaml} set filetype=yaml.ansible
-autocmd BufNewFile,BufRead */host_vars/**/*.{yml,yaml} set filetype=yaml.ansible
+augroup FiletypeDetection
+  autocmd!
+  autocmd BufRead,BufNewFile *.tfvars set filetype=terraform
+  " Ansible: treat YAML files in ansible directories as yaml.ansible
+  autocmd BufNewFile,BufRead */playbooks/*.{yml,yaml}     set filetype=yaml.ansible
+  autocmd BufNewFile,BufRead */roles/**/*.{yml,yaml}      set filetype=yaml.ansible
+  autocmd BufNewFile,BufRead */tasks/**/*.{yml,yaml}      set filetype=yaml.ansible
+  autocmd BufNewFile,BufRead */handlers/**/*.{yml,yaml}   set filetype=yaml.ansible
+  autocmd BufNewFile,BufRead */group_vars/**/*.{yml,yaml} set filetype=yaml.ansible
+  autocmd BufNewFile,BufRead */host_vars/**/*.{yml,yaml}  set filetype=yaml.ansible
+augroup END
 
