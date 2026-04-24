@@ -1,19 +1,21 @@
 ---
-name: Dotfiles migration plan (Option B)
-description: Future plan to migrate vim/tmux/zsh/git configs from brother's ~/.dotfiles into user's own ~/sannonthachai/dotfiles repo
+name: Dotfiles migration (Option B) — DONE
+description: Completed 2026-04-24 — full migration from brother's ~/.dotfiles to personal ~/sannonthachai/dotfiles
 type: project
 originSessionId: 0cdae9f7-ec4d-4876-8af5-a2d84b5fdf54
 ---
-Future plan: migrate the rest of the user's config from `~/.dotfiles/` (cloned from brother's `chanasit/dotfiles`) into the user's own repo at `~/sannonthachai/dotfiles/`.
 
-Items to migrate (checklist also in the repo's README.md):
-- `.vimrc` + `.vim/`
-- `.tmux.conf` + `.tmux.conf.local`
-- `.zshrc`
-- `.gitconfig`
-- `.config/nvim/`
-- Install/symlink script (Makefile or `install.sh`)
+**Status:** Completed 2026-04-24.
 
-**Why:** User wants full ownership of their dotfiles instead of relying on brother's repo. Agreed to do it in stages — Claude config first (Option A, done 2026-04-24), full migration later.
+Migrated from brother's `~/.dotfiles/` (chanasit/dotfiles) into user's own
+`~/sannonthachai/dotfiles/`:
 
-**How to apply:** When the user says they're ready for "Option B" or "migrate dotfiles", help them move files, update symlinks to point at the new repo, and update/retire the old `~/.dotfiles/` clone. Don't push to the user's brother's repo by accident.
+- `.vimrc`, `.editorconfig`, `.tmux.conf.local`, `.config/nvim/*`
+- `.zshrc`, `.tmux.conf`, `.gitconfig` (user's own files, previously not symlinked)
+- Added `install.sh` with idempotent symlink creation + `.bak` backups
+- Fixed hardcoded `/home/chai/.local/bin/terraform-ls` → `terraform-ls` (relies on PATH) for portability
+- `~/.dotfiles/` clone still exists but is no longer referenced by any symlinks in `$HOME`
+
+**How to apply:** The user's personal dotfiles repo is now the single source of truth. If the user mentions editing configs, assume it goes through the personal repo. When suggesting config-related changes, recommend editing in `~/sannonthachai/dotfiles/`.
+
+If the user says "delete the old dotfiles" — OK to `rm -rf ~/.dotfiles` after confirming no stray symlinks remain. Run `find ~ -maxdepth 3 -type l -lname '*/.dotfiles/*'` first to verify.
