@@ -6,7 +6,7 @@
 - DevOps tools: Docker, Kubernetes, Terraform, Ansible, ArgoCD, K9s, GitHub Actions, GitLab CI, Jenkins
 - Cloud: Huawei Cloud (primary)
 - Environment: WSL2 on Windows (Ubuntu), zsh + oh-my-zsh with **powerlevel10k** theme
-- Personal dotfiles: `~/sannonthachai/dotfiles` (github.com/sannonthachai/dotfiles). `~/.dotfiles` is brother's repo (chanasit/dotfiles) — still source for vim/tmux/zsh until Option B migration
+- Personal dotfiles: `~/sannonthachai/dotfiles` (github.com/sannonthachai/dotfiles) — source of truth for `.vimrc`, `.zshrc`, `.tmux.conf`, `.gitconfig`, nvim, alacritty, Claude Code. Home files are symlinks into the repo (managed via `install.sh`).
 
 ## Response Style
 - Default: short and direct. Give me the answer or code, not a lecture.
@@ -33,7 +33,7 @@
 ## Vim (learning)
 I'm learning Vim — treat me as a Vim beginner/intermediate when explaining motions, operators, or idioms, even though my config is advanced.
 
-**Config:** `~/.dotfiles/.vimrc` (brother's repo, being migrated to personal repo eventually)
+**Config:** `~/sannonthachai/dotfiles/.vimrc` (symlinked to `~/.vimrc`)
 **Plugin manager:** vim-plug
 **Leader:** `,` (comma) — localleader also `,`
 **Theme:** gruvbox dark (`background=dark`, `g:gruvbox_contrast_dark='medium'`)

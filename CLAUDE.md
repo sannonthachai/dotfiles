@@ -1,55 +1,48 @@
 # Project: dotfiles
 
-My personal dotfiles repository. Currently holds Claude Code configuration;
-planned to expand into full vim/tmux/zsh/git dotfiles (see README.md).
+My personal dotfiles repository. Holds shell, editor, terminal, and Claude Code
+config. See `README.md` for new-machine setup instructions.
 
 ## Layout
 
 ```
-.claude/
-├── CLAUDE.md        # global preferences, symlinked from ~/.claude/CLAUDE.md
-└── memory/          # auto-memory (read/written by Claude Code via autoMemoryDirectory)
+.claude/                     # Claude Code config (global CLAUDE.md + memory)
 .config/
-└── alacritty/
-    └── alacritty.toml  # Alacritty terminal config (gruvbox light, JetBrainsMono NF)
-README.md
-CLAUDE.md            # this file — project-level context for anyone working IN this repo
-.gitignore
+├── alacritty/               # terminal config (Windows: copy to %APPDATA%)
+└── nvim/                    # neovim config (shares CoC settings with vim)
+.vimrc .zshrc .tmux.conf .tmux.conf.local .gitconfig .editorconfig
+install.sh                   # symlinks everything into $HOME (Linux/macOS)
+README.md CLAUDE.md .gitignore
 ```
 
 ## Conventions
 
-- `.claude/CLAUDE.md` — global preferences that apply across **all** projects.
-  Edit this when updating how I want Claude to behave generally.
-- `.claude/memory/*.md` — typed memory entries (user / feedback / project /
-  reference). Managed by Claude's auto-memory system. Don't hand-edit unless
-  you know what you're doing; Claude writes here during normal conversations.
-- `.config/alacritty/alacritty.toml` — terminal config. On Windows, copy to
-  `%APPDATA%\alacritty\`. On Linux/macOS, symlink to `~/.config/alacritty/`.
-- `README.md` — human-facing setup instructions for new machines.
-- This file (`CLAUDE.md` at the repo root) — project-specific context for
-  anyone working *in* this repo.
-
-## Working in this repo
-
-- Commit messages: short, imperative mood. Group related changes.
-- Always push after committing so the other laptop stays in sync.
+- **Edit here, not in `$HOME`** — home files are symlinks to this repo. Changes
+  are tracked here and versioned automatically.
+- **Commit messages:** short, imperative mood. Group related changes.
+- **Push after commit** so the other laptop stays in sync.
+- **No hardcoded paths** like `/home/chai/...` — use `~/`, `$HOME`, or rely on PATH.
 - When adding a new memory file under `.claude/memory/`, also add a one-line
   pointer in `.claude/memory/MEMORY.md` (the index file).
 
 ## Portability
 
-Config must work on both Linux and macOS (and Windows for terminal configs):
-- No hard-coded `/home/...` or `/Users/...` paths in committed files.
-- Use `~/` or `$HOME` in any paths the user runs manually.
-- `autoMemoryDirectory` in `~/.claude/settings.json` points Claude Code here
-  regardless of OS, avoiding the default cwd-derived memory path.
-- Alacritty config: `%APPDATA%\alacritty\` on Windows vs `~/.config/alacritty/`
-  on Linux/macOS. The repo stores it under `.config/alacritty/`; on Windows,
-  copy rather than symlink (WSL ↔ Windows symlinks need admin).
+Config works on Linux, macOS, and Windows (for Alacritty/terminal config):
 
-## Future (Option B)
+- Paths use `~/` or `$HOME` in shell, never hardcoded home.
+- Alacritty: `.config/alacritty/alacritty.toml` symlinked on Linux/macOS via
+  `install.sh`. On Windows, copy to `%APPDATA%\alacritty\` manually (WSL ↔
+  Windows symlinks need admin privileges).
+- Claude Code memory: `~/.claude/settings.json` has
+  `autoMemoryDirectory = "~/sannonthachai/dotfiles/.claude/memory"` so the path
+  is stable across OSes (not derived from cwd).
+- Vim: plugin list + mappings are cross-platform. `coc-settings.json` uses
+  `terraform-ls` (no absolute path) — expects it on `$PATH`.
 
-See README.md's migration checklist. When migrating vim/tmux/zsh configs from
-`~/.dotfiles/` (brother's repo) into this one, add an install script that
-handles Linux/macOS differences.
+## install.sh
+
+Idempotent — safe to re-run. Backs up existing non-symlink `$HOME` files to
+`*.bak` the first time it runs. Prefixes each operation with a clear log line.
+
+When adding a new dotfile to the repo, also add a `link` call in `install.sh`
+so new machines pick it up.
