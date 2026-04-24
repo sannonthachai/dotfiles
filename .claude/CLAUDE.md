@@ -36,7 +36,7 @@ I'm learning Vim — treat me as a Vim beginner/intermediate when explaining mot
 **Config:** `~/.dotfiles/.vimrc` (brother's repo, being migrated to personal repo eventually)
 **Plugin manager:** vim-plug
 **Leader:** `,` (comma) — localleader also `,`
-**Theme:** gruvbox light (`background=light`, `g:gruvbox_contrast_light='medium'`)
+**Theme:** gruvbox dark (`background=dark`, `g:gruvbox_contrast_dark='medium'`)
 **Clipboard:** `unnamedplus` (system clipboard shared)
 **Mouse:** disabled — keyboard only
 
@@ -98,7 +98,7 @@ dotfiles repo at `.config/alacritty/alacritty.toml`.
 
 - Launches `wsl.exe` directly into Ubuntu zsh
 - Font: **JetBrainsMono Nerd Font** at 11pt (required for powerlevel10k icons)
-- Theme: gruvbox light (matches Vim)
+- Theme: gruvbox dark (matches Vim)
 - Clipboard: `Ctrl-Shift-C` / `Ctrl-Shift-V`; selection auto-copies
 - Scrollback: 10000 lines
 - Font size: `Ctrl-+` / `Ctrl--` / `Ctrl-0` reset
