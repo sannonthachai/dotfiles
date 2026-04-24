@@ -6,7 +6,7 @@ program = "wsl.exe"
 args = ["--cd", "~"]
 
 [window]
-startup_mode = "Maximized"
+startup_mode = "Fullscreen"
 opacity = 1.0
 padding = { x = 8, y = 8 }
 dynamic_title = true
@@ -79,3 +79,8 @@ action = "DecreaseFontSize"
 key = "Key0"
 mods = "Control"
 action = "ResetFontSize"
+
+# Toggle fullscreen
+[[keyboard.bindings]]
+key = "F11"
+action = "ToggleFullscreen"
