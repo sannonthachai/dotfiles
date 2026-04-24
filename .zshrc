@@ -197,7 +197,8 @@ export NO_PROXY=localhost,127.0.0.1
 
 # Terraform Config
 export TF_VERSION=0.12.31
-export TF_LOG=1
+# TF_LOG disabled by default. Set to TRACE/DEBUG/INFO/WARN/ERROR only when debugging.
+# export TF_LOG=TRACE
 
 # Pyenv Config
 if command -v pyenv 1>/dev/null 2>&1; then

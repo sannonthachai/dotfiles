@@ -333,9 +333,9 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => External Formatters (fallback when CoC has no provider)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType go      nnoremap <buffer> <leader>F :!gofmt -w %<CR>:e<CR>
-autocmd FileType sh,bash   nnoremap <buffer> <leader>F :!shfmt -w %<CR>:e<CR>
-autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :!terraform fmt %<CR>:e<CR>
+autocmd FileType go      nnoremap <buffer> <leader>F :w<CR>:!gofmt -w %<CR>:e<CR>
+autocmd FileType sh,bash nnoremap <buffer> <leader>F :w<CR>:!shfmt -w %<CR>:e<CR>
+autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :w<CR>:!terraform fmt %<CR>:e<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF (fuzzy finder)
