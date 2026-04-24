@@ -1,0 +1,4 @@
+- [User profile](user_profile.md) — SWE + DevOps, Go/TS/SQL, Huawei Cloud, K8s+ArgoCD
+- [Response style and language](feedback_response_style.md) — short by default, teach on request, mirror Thai/English
+- [Workflow preferences](feedback_workflow.md) — plan big changes, ask when unclear, confirm destructive ops
+- [Code style preferences](feedback_code_style.md) — small funcs, early returns, explicit error handling (Go/TS)
