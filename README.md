@@ -11,14 +11,26 @@ Claude Code config:
 
 These are symlinked from `~/.claude/` so Claude Code reads them from this repo.
 
-## Setup on a new machine
+## Setup on a new machine (Linux or macOS)
 
 ```bash
 git clone <this-repo> ~/sannonthachai/dotfiles
+
+# Symlink CLAUDE.md
+mkdir -p ~/.claude
 ln -s ~/sannonthachai/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
-mkdir -p ~/.claude/projects/-home-chai
-ln -s ~/sannonthachai/dotfiles/.claude/projects/-home-chai/memory ~/.claude/projects/-home-chai/memory
 ```
+
+Then in `~/.claude/settings.json` add:
+
+```json
+{
+  "autoMemoryDirectory": "~/sannonthachai/dotfiles/.claude/memory"
+}
+```
+
+This makes Claude Code read/write memory directly from this repo, which works
+identically on Linux and macOS (no symlink needed, no cwd-sensitive path).
 
 ## Planned (future): full dotfiles migration
 

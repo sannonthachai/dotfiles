@@ -2,3 +2,5 @@
 - [Response style and language](feedback_response_style.md) — short by default, teach on request, mirror Thai/English
 - [Workflow preferences](feedback_workflow.md) — plan big changes, ask when unclear, confirm destructive ops
 - [Code style preferences](feedback_code_style.md) — small funcs, early returns, explicit error handling (Go/TS)
+- [Personal dotfiles repo](reference_dotfiles.md) — ~/sannonthachai/dotfiles (Claude config); ~/.dotfiles still holds vim/tmux/zsh from brother
+- [Dotfiles migration plan (Option B)](project_dotfiles_migration.md) — future: migrate vim/tmux/zsh/git from ~/.dotfiles into personal repo
