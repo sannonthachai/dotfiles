@@ -2,37 +2,74 @@
 
 My personal dotfiles repository.
 
-## Current scope
+## What's in here
 
-Claude Code config:
+Claude Code configuration — global preferences and auto-memory so a fresh
+install of Claude Code on any machine picks up my setup.
 
-- `.claude/CLAUDE.md` — global preferences (response style, stack, Vim/tmux setup)
-- `.claude/projects/-home-chai/memory/` — auto-memory entries
+```
+.claude/
+├── CLAUDE.md              # global preferences (response style, stack, workflows)
+└── memory/                # auto-memory entries (user profile, feedback, references)
+```
 
-These are symlinked from `~/.claude/` so Claude Code reads them from this repo.
+## Setup on a new laptop (Linux or macOS)
 
-## Setup on a new machine (Linux or macOS)
+### 1. Install Claude Code
+
+https://docs.claude.com/en/docs/claude-code/quickstart
+
+Run `claude` once so `~/.claude/` is created.
+
+### 2. Clone this repo
 
 ```bash
-git clone <this-repo> ~/sannonthachai/dotfiles
+git clone git@github.com:<your-username>/dotfiles.git ~/sannonthachai/dotfiles
+```
 
-# Symlink CLAUDE.md
+(Update the URL once the repo is pushed to GitHub.)
+
+### 3. Link CLAUDE.md
+
+```bash
 mkdir -p ~/.claude
 ln -s ~/sannonthachai/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
 ```
 
-Then in `~/.claude/settings.json` add:
+### 4. Point Claude at the memory directory
+
+Edit `~/.claude/settings.json` and add `autoMemoryDirectory`:
 
 ```json
 {
+  "effortLevel": "medium",
   "autoMemoryDirectory": "~/sannonthachai/dotfiles/.claude/memory"
 }
 ```
 
-This makes Claude Code read/write memory directly from this repo, which works
-identically on Linux and macOS (no symlink needed, no cwd-sensitive path).
+This avoids a symlink and keeps the path portable across Linux (`/home/...`)
+and macOS (`/Users/...`) — the default memory path is derived from the home
+directory, but this override bypasses that.
 
-## Planned (future): full dotfiles migration
+### 5. Verify
+
+Open Claude Code and run any prompt. Ask "what do you know about me?" — it
+should recall my profile, preferences, and setup notes from this repo.
+
+## Making changes
+
+- Edit files directly in this repo, or edit via the symlink at
+  `~/.claude/CLAUDE.md`. Both point at the same file.
+- Memory files are written directly into `.claude/memory/` by Claude Code, so
+  new memories show up as git changes here.
+- Commit and push when you want to sync to other machines:
+
+  ```bash
+  cd ~/sannonthachai/dotfiles
+  git add -A && git commit -m "update memory" && git push
+  ```
+
+## Planned (future): full dotfiles migration — "Option B"
 
 Currently `~/.dotfiles/` is cloned from my brother's repo (`chanasit/dotfiles`)
 and handles vim, tmux, zsh, git config, etc. Plan is to migrate those into this
@@ -43,5 +80,12 @@ repo so everything is owned by me:
 - [ ] `.zshrc` → move from `~/.dotfiles/.zshrc`
 - [ ] `.gitconfig` → move from `~/.dotfiles/.gitconfig`
 - [ ] `.config/nvim/` → move from `~/.dotfiles/.config/nvim/`
-- [ ] Install/symlink script (Makefile or `install.sh`)
+- [ ] Install/symlink script (Makefile or `install.sh`) with Linux + macOS support
 - [ ] Stop using `~/.dotfiles/` entirely
+
+### Cross-platform considerations for Option B
+
+- Package manager: `apt` on Linux vs `brew` on macOS — detect with `uname -s`
+- Home path: `/home/<user>` vs `/Users/<user>` — avoid hard-coded absolute paths
+- URL opener: `xdg-open` (Linux) vs `open` (macOS)
+- Terraform-ls etc. — install via script rather than pinning a path in `coc-settings.json`
