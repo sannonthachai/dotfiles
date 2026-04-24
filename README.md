@@ -11,7 +11,22 @@ install of Claude Code on any machine picks up my setup.
 .claude/
 ├── CLAUDE.md              # global preferences (response style, stack, workflows)
 └── memory/                # auto-memory entries (user profile, feedback, references)
+.config/
+└── alacritty/
+    └── alacritty.toml     # Alacritty terminal config (gruvbox light, WSL shell)
 ```
+
+### Alacritty config — platform paths
+
+| OS | Location |
+|---|---|
+| Linux | `~/.config/alacritty/alacritty.toml` |
+| macOS | `~/.config/alacritty/alacritty.toml` |
+| Windows | `%APPDATA%\alacritty\alacritty.toml` |
+
+On Linux/macOS, symlink: `ln -s ~/sannonthachai/dotfiles/.config/alacritty ~/.config/alacritty`
+
+On Windows, copy the file to `%APPDATA%\alacritty\` (symlinks across WSL ↔ Windows need admin).
 
 ## Setup on a new laptop (Linux or macOS)
 

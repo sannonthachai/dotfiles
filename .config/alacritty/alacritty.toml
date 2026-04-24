@@ -1,0 +1,81 @@
+# Alacritty config — launches WSL with zsh
+# Docs: https://alacritty.org/config-alacritty.html
+
+[terminal.shell]
+program = "wsl.exe"
+args = ["--cd", "~"]
+
+[window]
+startup_mode = "Maximized"
+opacity = 1.0
+padding = { x = 8, y = 8 }
+dynamic_title = true
+decorations = "full"
+
+[font]
+size = 11.0
+normal = { family = "Cascadia Code", style = "Regular" }
+bold   = { family = "Cascadia Code", style = "Bold" }
+italic = { family = "Cascadia Code", style = "Italic" }
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+
+[selection]
+save_to_clipboard = true
+
+# Gruvbox light colors (to match your Vim theme)
+[colors.primary]
+background = "#fbf1c7"
+foreground = "#3c3836"
+
+[colors.normal]
+black   = "#fbf1c7"
+red     = "#cc241d"
+green   = "#98971a"
+yellow  = "#d79921"
+blue    = "#458588"
+magenta = "#b16286"
+cyan    = "#689d6a"
+white   = "#7c6f64"
+
+[colors.bright]
+black   = "#928374"
+red     = "#9d0006"
+green   = "#79740e"
+yellow  = "#b57614"
+blue    = "#076678"
+magenta = "#8f3f71"
+cyan    = "#427b58"
+white   = "#3c3836"
+
+# Key bindings
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
