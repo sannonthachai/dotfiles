@@ -5,4 +5,5 @@
 - [Personal dotfiles repo](reference_dotfiles.md) — ~/sannonthachai/dotfiles (Claude config); ~/.dotfiles still holds vim/tmux/zsh from brother
 - [Dotfiles migration plan (Option B)](project_dotfiles_migration.md) — future: migrate vim/tmux/zsh/git from ~/.dotfiles into personal repo
 - [Terminal emulator](user_terminal.md) — now WezTerm (Alacritty → Windows Terminal → WezTerm); CLAUDE.md "## Terminal" still says Alacritty, stale
-- [Grammar-check user input](feedback_grammar_check.md) — before answering, correct English grammar of user's input, show fix, then answer
+- [Grammar-check user input](feedback_grammar_check.md) — correct English grammar, show fix, then answer; also suggest better/native rewrites even when grammatically correct
+- [Custom Claude Code skills](reference_claude_skills.md) — init-with-history & update-claude-md installed at ~/.claude/skills/; session-load gotcha

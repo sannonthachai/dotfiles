@@ -53,6 +53,11 @@ link .claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
 # Memory directory is NOT symlinked — it's pointed to via autoMemoryDirectory
 # in ~/.claude/settings.json. See README.md step 4.
 
+# Subagents and skills are symlinked at the directory level so adding new
+# agents/skills inside the repo automatically appears in $HOME without a re-run.
+link .claude/agents "$HOME/.claude/agents"
+link .claude/skills "$HOME/.claude/skills"
+
 # --- Alacritty ---
 # On Linux/macOS, symlink into ~/.config/alacritty
 # On Windows, users should copy manually to %APPDATA%\alacritty\
