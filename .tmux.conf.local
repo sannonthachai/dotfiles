@@ -327,6 +327,15 @@ set -g default-terminal "screen-256color"
 # increase history size
 set -g history-limit 5000
 
+# keep window size based on the smallest *attached* client viewing it,
+# not the smallest session it's linked to — fixes vim redraw glitches
+# (invisible top line) after switching between sessions
+setw -g aggressive-resize on
+
+# force a full client redraw after switching windows — fixes vim/airline
+# top line disappearing when switching back to a vim window
+set-hook -g after-select-window 'refresh-client'
+
 # decrease command delay (increases vim responsiveness)
 set -sg escape-time 1.5
 

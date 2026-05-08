@@ -60,6 +60,7 @@ set noswapfile
 set nocursorline
 set shortmess+=c
 set autoread
+set lazyredraw
 
 " folding
 set foldmethod=indent
@@ -80,6 +81,21 @@ set completeopt=menuone,noinsert,noselect
 
 " last line history
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" force redraw + airline tabline refresh when tmux switches windows
+" or terminal resizes — otherwise the tabline row gets overwritten by
+" the buffer's first line
+set showtabline=2
+autocmd FocusGained * silent! AirlineRefresh | redraw!
+autocmd VimResized  * silent! AirlineRefresh | redraw!
+autocmd TextYankPost * silent! AirlineRefresh
+
+" manual rescue key if the tabline ever gets clobbered
+nnoremap <silent> <leader>R :silent! AirlineRefresh<CR>:redraw!<CR>
+
+" disable Background Color Erase — avoids stale background cells
+" after tmux redraws
+set t_ut=
 
 noremap <C-h> <Left>
 noremap <C-j> <Down>
@@ -338,6 +354,7 @@ augroup ExternalFormatters
   autocmd FileType go      nnoremap <buffer> <leader>F :w<CR>:!gofmt -w %<CR>:e<CR>
   autocmd FileType sh,bash nnoremap <buffer> <leader>F :w<CR>:!shfmt -w %<CR>:e<CR>
   autocmd FileType terraform,terraform-vars,tfvars,hcl nnoremap <buffer> <leader>F :w<CR>:!terraform fmt %<CR>:e<CR>
+  autocmd FileType yaml,yaml.ansible,helm nnoremap <buffer> <leader>F :w<CR>:!prettier --write %<CR>:e<CR>
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

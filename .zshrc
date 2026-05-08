@@ -254,6 +254,8 @@ ZLE_RPROMPT_INDENT=0
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export COLORTERM=truecolor
+
 # Lazy-load NVM — defers loading until first use of nvm/node/npm/npx.
 # Shaves ~300-500ms off shell startup.
 export NVM_DIR="$HOME/.nvm"
@@ -266,6 +268,7 @@ nvm() {
 node() { unset -f node; nvm > /dev/null; node "$@"; }
 npm()  { unset -f npm;  nvm > /dev/null; npm "$@"; }
 npx()  { unset -f npx;  nvm > /dev/null; npx "$@"; }
+claude() { unset -f claude; nvm > /dev/null; command claude "$@"; }
 
 decode() {
   echo "$1" | base64 --decode
