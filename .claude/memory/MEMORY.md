@@ -8,3 +8,4 @@
 - [Grammar-check user input](feedback_grammar_check.md) — correct English grammar, show fix, then answer; also suggest better/native rewrites even when grammatically correct
 - [Custom Claude Code skills](reference_claude_skills.md) — init-with-history & update-claude-md installed at ~/.claude/skills/; session-load gotcha
 - [Symlink safety under ~/.claude](feedback_symlink_safety.md) — ~/.claude/{agents,skills} are dir-symlinks into dotfiles; rm there deletes repo content. Always readlink before destructive ops
+- [Machine-migration scripts](reference_migrate_scripts.md) — dotfiles/migrate/{bundle,restore}.sh for transferring SSH/kube/docker/GPG creds between machines
