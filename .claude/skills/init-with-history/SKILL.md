@@ -13,6 +13,19 @@ Generate a `CLAUDE.md` that documents the project the same way `/init` does — 
 - When initializing a fresh project that was just set up interactively.
 - NOT for routine init on an existing well-documented repo — use plain `/init` for that.
 
+## Gotcha: skill registration is session-scoped
+
+Claude Code loads skills at session start. If this skill (or any skill) is
+created or edited mid-session, `/init-with-history` will fail with
+"Unknown skill" until the user starts a new Claude Code session. The skill's
+*instructions* can still be followed manually in the current session — just
+read this file and execute the procedure — but the slash-command shortcut
+won't be available.
+
+If invoked and missing in the current session, tell the user: "This skill
+was added mid-session and needs a Claude Code restart to register. I can
+follow the procedure manually now, or you can restart and re-invoke."
+
 ## Procedure
 
 ### 1. Standard init analysis
