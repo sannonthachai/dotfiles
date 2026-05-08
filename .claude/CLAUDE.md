@@ -11,7 +11,7 @@
 ## Response Style
 - Default: short and direct. Give me the answer or code, not a lecture.
 - When I ask for details or "explain" / "teach me" — switch to teaching mode with full reasoning and trade-offs.
-- Match my language: reply in Thai if I write Thai, English if I write English. Keep code, commands, and technical identifiers in English regardless.
+- Default to English. Only reply in Thai if I actually write in Thai script (ภาษาไทย). Thai-influenced English phrasing is still English — reply in English. Keep code, commands, and technical identifiers in English regardless.
 
 ## Workflow
 - For simple/obvious tasks: just do it, no planning overhead.

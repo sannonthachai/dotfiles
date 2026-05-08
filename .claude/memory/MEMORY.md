@@ -4,3 +4,5 @@
 - [Code style preferences](feedback_code_style.md) — small funcs, early returns, explicit error handling (Go/TS)
 - [Personal dotfiles repo](reference_dotfiles.md) — ~/sannonthachai/dotfiles (Claude config); ~/.dotfiles still holds vim/tmux/zsh from brother
 - [Dotfiles migration plan (Option B)](project_dotfiles_migration.md) — future: migrate vim/tmux/zsh/git from ~/.dotfiles into personal repo
+- [Terminal emulator](user_terminal.md) — now WezTerm (Alacritty → Windows Terminal → WezTerm); CLAUDE.md "## Terminal" still says Alacritty, stale
+- [Grammar-check user input](feedback_grammar_check.md) — before answering, correct English grammar of user's input, show fix, then answer
