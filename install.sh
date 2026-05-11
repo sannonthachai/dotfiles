@@ -58,6 +58,9 @@ link .claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
 link .claude/agents "$HOME/.claude/agents"
 link .claude/skills "$HOME/.claude/skills"
 
+# --- Personal scripts (bin/) ---
+link bin/rke2-cert-check "$HOME/bin/rke2-cert-check"
+
 # --- Alacritty ---
 # On Linux/macOS, symlink into ~/.config/alacritty
 # On Windows, users should copy manually to %APPDATA%\alacritty\
