@@ -67,11 +67,31 @@ for f in "${paths[@]}"; do
 done
 '
 
-OUT=$(ssh -o BatchMode=no -o ConnectTimeout=8 -t "${SSH_USER}@${HOST}" "sudo bash -c '$REMOTE'" 2>&1) || {
-  echo "$OUT" >&2
-  echo "rke2-cert-check: ssh/sudo failed on $HOST" >&2
-  exit 3
-}
+# Two-phase to keep the sudo password prompt visible while still capturing
+# remote stdout for parsing. Phase 1 runs with -t (sudo prompt shows on the
+# user's TTY) and redirects the script's stdout into a remote tempfile.
+# Phase 2 fetches the file content without needing sudo or a TTY.
+#
+# Why not a single $(ssh -t ...) capture: with -t, ssh forwards the remote
+# pty (including sudo's password prompt) to local stdout, and $(...) swallows
+# it — the user sees a silent hang. Why not "sudo -v" warmup + second SSH:
+# sudo's tty_tickets (default on Ubuntu) scope the timestamp to one pty, so
+# the second SSH would still prompt.
+REMOTE_OUT="/tmp/rke2cc.$$.$(date +%s).out"
+
+ssh -o ConnectTimeout=8 -t "${SSH_USER}@${HOST}" \
+  "sudo bash -c '$REMOTE' > $REMOTE_OUT" || {
+    echo "rke2-cert-check: ssh/sudo failed on $HOST" >&2
+    ssh -o ConnectTimeout=4 "${SSH_USER}@${HOST}" "rm -f $REMOTE_OUT" 2>/dev/null || true
+    exit 3
+  }
+
+OUT=$(ssh -o ConnectTimeout=8 "${SSH_USER}@${HOST}" \
+  "cat $REMOTE_OUT && rm -f $REMOTE_OUT" 2>&1) || {
+    echo "$OUT" >&2
+    echo "rke2-cert-check: failed to fetch remote output from $HOST" >&2
+    exit 3
+  }
 
 # strip CR from `ssh -t`
 OUT=$(printf "%s" "$OUT" | tr -d "\r")
