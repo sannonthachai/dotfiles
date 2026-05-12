@@ -82,6 +82,32 @@ link .config/nvim/init.vim               "$HOME/.config/nvim/init.vim"
 link .config/nvim/coc-settings.json      "$HOME/.config/nvim/coc-settings.json"
 
 # --- tmux ---
+if ! command -v tmux >/dev/null 2>&1; then
+  case "$OS" in
+    Darwin)
+      if command -v brew >/dev/null 2>&1; then
+        echo "    installing tmux via brew"
+        brew install tmux
+      else
+        echo "    ! brew not found — install Homebrew then: brew install tmux"
+      fi
+      ;;
+    Linux)
+      if command -v apt-get >/dev/null 2>&1; then
+        echo "    installing tmux via apt-get"
+        sudo apt-get update && sudo apt-get install -y tmux
+      else
+        echo "    ! apt-get not found — install tmux with your package manager"
+      fi
+      ;;
+    *)
+      echo "    ! unknown OS $OS — install tmux manually"
+      ;;
+  esac
+else
+  echo "    tmux already installed: $(command -v tmux)"
+fi
+
 link .tmux.conf        "$HOME/.tmux.conf"
 link .tmux.conf.local  "$HOME/.tmux.conf.local"
 
