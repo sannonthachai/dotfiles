@@ -109,6 +109,14 @@ install_pkg() {
 install_pkg fzf
 install_pkg rg ripgrep
 
+# --- Container runtime (macOS only) ---
+# Colima = free Docker Desktop alternative. Provides the Linux VM; `docker`
+# CLI talks to it. Start with `colima start` after install.
+if [ "$OS" = "Darwin" ]; then
+  install_pkg colima
+  install_pkg docker
+fi
+
 # vim-plug — required by .vimrc (`call plug#begin(...)`).
 install_plug() {
   local dest="$1"
