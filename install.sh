@@ -77,6 +77,24 @@ link .gitconfig      "$HOME/.gitconfig"
 link .editorconfig   "$HOME/.editorconfig"
 
 # --- Vim / Neovim ---
+# vim-plug — required by .vimrc (`call plug#begin(...)`).
+install_plug() {
+  local dest="$1"
+  if [ -f "$dest" ]; then
+    echo "    vim-plug already present: $dest"
+    return
+  fi
+  if command -v curl >/dev/null 2>&1; then
+    echo "    installing vim-plug -> $dest"
+    curl -fLo "$dest" --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  else
+    echo "    ! curl not found — install vim-plug manually: $dest"
+  fi
+}
+install_plug "$HOME/.vim/autoload/plug.vim"
+install_plug "$HOME/.local/share/nvim/site/autoload/plug.vim"
+
 link .vimrc                              "$HOME/.vimrc"
 link .config/nvim/init.vim               "$HOME/.config/nvim/init.vim"
 link .config/nvim/coc-settings.json      "$HOME/.config/nvim/coc-settings.json"
