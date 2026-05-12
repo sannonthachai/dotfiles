@@ -49,6 +49,19 @@ link .tmux.conf        "$HOME/.tmux.conf"
 link .tmux.conf.local  "$HOME/.tmux.conf.local"
 
 # --- Claude Code ---
+# Install the Claude Code CLI if missing. Requires npm on $PATH.
+if ! command -v claude >/dev/null 2>&1; then
+  if command -v npm >/dev/null 2>&1; then
+    echo "    installing Claude Code CLI via npm (@anthropic-ai/claude-code)"
+    npm install -g @anthropic-ai/claude-code
+  else
+    echo "    ! npm not found — skipping Claude Code CLI install."
+    echo "      Install Node.js/npm, then run: npm install -g @anthropic-ai/claude-code"
+  fi
+else
+  echo "    claude already installed: $(command -v claude)"
+fi
+
 link .claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
 # Memory directory is NOT symlinked — it's pointed to via autoMemoryDirectory
 # in ~/.claude/settings.json. See README.md step 4.
