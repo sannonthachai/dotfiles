@@ -257,18 +257,21 @@ ZLE_RPROMPT_INDENT=0
 export COLORTERM=truecolor
 
 # Lazy-load NVM — defers loading until first use of nvm/node/npm/npx.
-# Shaves ~300-500ms off shell startup.
+# Shaves ~300-500ms off shell startup. Only defined when nvm is installed;
+# otherwise system node (Homebrew, apt, etc.) is used directly.
 export NVM_DIR="$HOME/.nvm"
-nvm() {
-  unset -f nvm node npm npx yarn pnpm 2>/dev/null
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  nvm "$@"
-}
-node() { unset -f node; nvm > /dev/null; node "$@"; }
-npm()  { unset -f npm;  nvm > /dev/null; npm "$@"; }
-npx()  { unset -f npx;  nvm > /dev/null; npx "$@"; }
-claude() { unset -f claude; nvm > /dev/null; command claude "$@"; }
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  nvm() {
+    unset -f nvm node npm npx yarn pnpm claude 2>/dev/null
+    \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    nvm "$@"
+  }
+  node() { unset -f node; nvm > /dev/null; node "$@"; }
+  npm()  { unset -f npm;  nvm > /dev/null; npm "$@"; }
+  npx()  { unset -f npx;  nvm > /dev/null; npx "$@"; }
+  claude() { unset -f claude; nvm > /dev/null; command claude "$@"; }
+fi
 
 decode() {
   echo "$1" | base64 --decode
