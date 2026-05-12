@@ -115,6 +115,7 @@ install_pkg rg ripgrep
 if [ "$OS" = "Darwin" ]; then
   install_pkg colima
   install_pkg docker
+  install_pkg docker-compose
 fi
 
 # vim-plug — required by .vimrc (`call plug#begin(...)`).
