@@ -77,6 +77,38 @@ link .gitconfig      "$HOME/.gitconfig"
 link .editorconfig   "$HOME/.editorconfig"
 
 # --- Vim / Neovim ---
+# fzf + ripgrep — required by .vimrc fuzzy/search mappings (Ctrl-p, ,/).
+install_pkg() {
+  local pkg="$1"
+  if command -v "$pkg" >/dev/null 2>&1; then
+    echo "    $pkg already installed: $(command -v "$pkg")"
+    return
+  fi
+  case "$OS" in
+    Darwin)
+      if command -v brew >/dev/null 2>&1; then
+        echo "    installing $pkg via brew"
+        brew install "$pkg"
+      else
+        echo "    ! brew not found — install Homebrew then: brew install $pkg"
+      fi
+      ;;
+    Linux)
+      if command -v apt-get >/dev/null 2>&1; then
+        echo "    installing $pkg via apt-get"
+        sudo apt-get update && sudo apt-get install -y "$pkg"
+      else
+        echo "    ! apt-get not found — install $pkg with your package manager"
+      fi
+      ;;
+    *)
+      echo "    ! unknown OS $OS — install $pkg manually"
+      ;;
+  esac
+}
+install_pkg fzf
+install_pkg ripgrep
+
 # vim-plug — required by .vimrc (`call plug#begin(...)`).
 install_plug() {
   local dest="$1"
