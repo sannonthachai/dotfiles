@@ -34,6 +34,43 @@ link() {
   echo "    linked: $dest -> $src"
 }
 
+# --- oh-my-zsh + plugins/theme referenced by .zshrc ---
+# Installed before symlinking .zshrc so the first `zsh` after install works.
+ZSH_DIR="${ZSH:-$HOME/.oh-my-zsh}"
+ZSH_CUSTOM="$ZSH_DIR/custom"
+
+if [ ! -d "$ZSH_DIR" ]; then
+  if command -v curl >/dev/null 2>&1; then
+    echo "    installing oh-my-zsh"
+    RUNZSH=no KEEP_ZSHRC=yes sh -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+      "" --unattended --keep-zshrc
+  else
+    echo "    ! curl not found — skipping oh-my-zsh install"
+  fi
+else
+  echo "    oh-my-zsh already installed: $ZSH_DIR"
+fi
+
+clone_if_missing() {
+  local repo="$1" dest="$2"
+  if [ -d "$dest" ]; then
+    echo "    already present: $dest"
+  else
+    echo "    cloning $repo -> $dest"
+    git clone --depth=1 "$repo" "$dest"
+  fi
+}
+
+if [ -d "$ZSH_DIR" ]; then
+  clone_if_missing https://github.com/romkatv/powerlevel10k.git \
+    "$ZSH_CUSTOM/themes/powerlevel10k"
+  clone_if_missing https://github.com/zsh-users/zsh-autosuggestions.git \
+    "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+  clone_if_missing https://github.com/zdharma-continuum/fast-syntax-highlighting.git \
+    "$ZSH_CUSTOM/plugins/fast-syntax-highlighting"
+fi
+
 # --- Shell / editor ---
 link .zshrc          "$HOME/.zshrc"
 link .gitconfig      "$HOME/.gitconfig"
