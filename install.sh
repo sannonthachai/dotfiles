@@ -109,6 +109,14 @@ install_pkg() {
 install_pkg fzf
 install_pkg rg ripgrep
 
+# --- DevOps CLIs ---
+install_pkg kubectl
+install_pkg k9s
+install_pkg helm
+# terraform is gated behind hashicorp/tap on brew; plain `brew install terraform`
+# still works via the homebrew-core formula but may warn — keep simple here.
+install_pkg terraform
+
 # --- Container runtime (macOS only) ---
 # Colima = free Docker Desktop alternative. Provides the Linux VM; `docker`
 # CLI talks to it. Start with `colima start` after install.
