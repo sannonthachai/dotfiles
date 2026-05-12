@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STORE_DIR="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+
+die() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+require() {
+  command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+require pass
+require gpg
+
+prompt_password() {
+  local p1 p2
+  read -s -p "Password: " p1
+  echo >&2
+  read -s -p "Confirm password: " p2
+  echo >&2
+  [[ "$p1" != "$p2" ]] && die "passwords do not match"
+  echo "$p1"
+}
+
+# Cross-platform recursive listing. macOS find doesn't support -printf,
+# so fall back to a sed-based path strip relative to STORE_DIR.
+list_secrets() {
+  find "$STORE_DIR" -type f -name '*.gpg' \
+    | sed -e "s|^$STORE_DIR/||" -e 's/\.gpg$//' \
+    | sort
+}
+
+copy_to_clipboard() {
+  local pw="$1"
+  if [[ -n "${WAYLAND_DISPLAY:-}" ]] && command -v wl-copy >/dev/null; then
+    printf '%s' "$pw" | wl-copy
+    echo "password copied to clipboard (wayland)"
+  elif [[ -n "${DISPLAY:-}" ]] && command -v xclip >/dev/null; then
+    printf '%s' "$pw" | xclip -in -selection clipboard
+    echo "password copied to clipboard (x11)"
+  elif command -v pbcopy >/dev/null; then
+    printf '%s' "$pw" | pbcopy
+    echo "password copied to clipboard (macOS)"
+  else
+    echo "⚠ clipboard unavailable (server / ssh)"
+    echo "password: $pw"
+  fi
+}
+
+case "${1:-}" in
+  ls|list)
+    list_secrets
+    ;;
+
+  add)
+    shift || true
+    FORCE=""
+    [[ "${1:-}" == "-f" ]] && FORCE="-f" && shift
+
+    NAME="${1:-}"
+    USER="${2:-}"
+
+    [[ -z "$NAME" || -z "$USER" ]] && \
+      die "Usage: pm add [-f] <name> <username>"
+
+    if pass show "$NAME" >/dev/null 2>&1 && [[ -z "$FORCE" ]]; then
+      die "secret '$NAME' already exists (use -f to overwrite)"
+    fi
+
+    PASS="$(prompt_password)"
+
+    {
+      printf '%s\n' "$PASS"
+      printf 'user: %s\n' "$USER"
+    } | pass insert $FORCE -m "$NAME" >/dev/null
+
+    echo "saved '$NAME' (username: $USER)"
+    ;;
+
+  user)
+    shift || true
+    NAME="${1:-}"
+    [[ -z "$NAME" ]] && die "Usage: pm user <name>"
+
+    U="$(pass show "$NAME" | awk -F': ' '/^(user|username):/{print $2; exit}')"
+    [[ -z "$U" ]] && die "no username field in '$NAME'"
+
+    echo "$U"
+    ;;
+
+  pass|copy)
+    shift || true
+    NAME="${1:-}"
+    [[ -z "$NAME" ]] && die "Usage: pm pass <name>"
+
+    PW="$(pass show "$NAME" | head -n1)"
+    [[ -z "$PW" ]] && die "could not retrieve password for '$NAME'"
+
+    copy_to_clipboard "$PW"
+    ;;
+
+  rm|remove|del|delete)
+    shift || true
+    FORCE=""
+    [[ "${1:-}" == "-f" ]] && FORCE="-f" && shift
+
+    NAME="${1:-}"
+    [[ -z "$NAME" ]] && die "Usage: pm rm [-f] <name>"
+
+    pass show "$NAME" >/dev/null 2>&1 || die "secret '$NAME' not found"
+    pass rm $FORCE "$NAME"
+    echo "removed '$NAME'"
+    ;;
+
+  mv|move|rename)
+    shift || true
+    OLD="${1:-}"
+    NEW="${2:-}"
+    [[ -z "$OLD" || -z "$NEW" ]] && die "Usage: pm mv <old_name> <new_name>"
+
+    pass mv "$OLD" "$NEW"
+    echo "Moved '$OLD' to '$NEW'"
+    ;;
+
+  *)
+    cat <<'USAGE'
+Usage:
+  pm ls|list
+  pm add [-f] <name> <username>
+  pm user <name>
+  pm pass|copy <name>
+  pm rm [-f] <name>
+  pm mv <old> <new>
+USAGE
+    ;;
+esac

@@ -203,6 +203,11 @@ link .claude/skills "$HOME/.claude/skills"
 
 # --- Personal scripts (bin/) ---
 link bin/rke2-cert-check "$HOME/bin/rke2-cert-check"
+link bin/pm              "$HOME/bin/pm"
+
+# pm depends on pass + gpg
+install_pkg pass
+install_pkg gpg gnupg
 
 # --- Alacritty ---
 # On Linux/macOS, symlink into ~/.config/alacritty
