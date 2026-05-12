@@ -79,9 +79,9 @@ link .editorconfig   "$HOME/.editorconfig"
 # --- Vim / Neovim ---
 # fzf + ripgrep — required by .vimrc fuzzy/search mappings (Ctrl-p, ,/).
 install_pkg() {
-  local pkg="$1"
-  if command -v "$pkg" >/dev/null 2>&1; then
-    echo "    $pkg already installed: $(command -v "$pkg")"
+  local bin="$1" pkg="${2:-$1}"
+  if command -v "$bin" >/dev/null 2>&1; then
+    echo "    $bin already installed: $(command -v "$bin")"
     return
   fi
   case "$OS" in
@@ -107,7 +107,7 @@ install_pkg() {
   esac
 }
 install_pkg fzf
-install_pkg ripgrep
+install_pkg rg ripgrep
 
 # vim-plug — required by .vimrc (`call plug#begin(...)`).
 install_plug() {
