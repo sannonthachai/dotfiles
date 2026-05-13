@@ -11,6 +11,10 @@
 
 set -euo pipefail
 
+# gpg-agent needs to know which TTY to open pinentry on. Without this,
+# the symmetric passphrase prompt can fail silently when stdin is a pipe.
+export GPG_TTY="${GPG_TTY:-$(tty 2>/dev/null || true)}"
+
 OUT="${OUT:-$HOME/pm-bundle.tar.gz.gpg}"
 STORE_DIR="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
 WORK="$(mktemp -d)"
@@ -54,7 +58,11 @@ echo "    You will be prompted for a passphrase. Use a strong one — this"
 echo "    bundle contains your full password store + GPG private key."
 echo
 
-tar -C "$WORK" -czf - . | gpg --symmetric --cipher-algo AES256 --output "$OUT"
+# Write tarball first, then encrypt as a separate step. Avoids stdin
+# contention between tar and the pinentry prompt.
+TAR="$WORK/bundle.tar.gz"
+tar -C "$WORK" --exclude='./bundle.tar.gz' -czf "$TAR" .
+gpg --symmetric --cipher-algo AES256 --output "$OUT" "$TAR"
 
 chmod 600 "$OUT"
 
