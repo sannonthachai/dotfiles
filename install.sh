@@ -88,7 +88,7 @@ install_pkg() {
     Darwin)
       if command -v brew >/dev/null 2>&1; then
         echo "    installing $pkg via brew"
-        brew install "$pkg"
+        brew install "$pkg" || echo "    ! brew install $pkg failed — continuing"
       else
         echo "    ! brew not found — install Homebrew then: brew install $pkg"
       fi
@@ -96,7 +96,8 @@ install_pkg() {
     Linux)
       if command -v apt-get >/dev/null 2>&1; then
         echo "    installing $pkg via apt-get"
-        sudo apt-get update && sudo apt-get install -y "$pkg"
+        { sudo apt-get update && sudo apt-get install -y "$pkg"; } \
+          || echo "    ! apt-get install $pkg failed — continuing"
       else
         echo "    ! apt-get not found — install $pkg with your package manager"
       fi
