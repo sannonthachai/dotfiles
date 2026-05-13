@@ -46,7 +46,23 @@ if ! gpg --list-secret-keys >/dev/null 2>&1 || \
   echo "error: no GPG secret keys found — pass cannot decrypt without one" >&2
   exit 1
 fi
-gpg --export-secret-keys --armor >"$WORK/gpg-secret.asc"
+
+# Export ONLY the keys that encrypt the store (from ~/.password-store/.gpg-id),
+# not every key in the keyring. Fewer passphrase prompts, smaller bundle.
+GPG_ID_FILE="$STORE_DIR/.gpg-id"
+if [ -f "$GPG_ID_FILE" ]; then
+  echo "    exporting keys listed in $GPG_ID_FILE:"
+  KEYS=()
+  while IFS= read -r id; do
+    [ -z "$id" ] && continue
+    echo "      $id"
+    KEYS+=("$id")
+  done <"$GPG_ID_FILE"
+  gpg --export-secret-keys --armor "${KEYS[@]}" >"$WORK/gpg-secret.asc"
+else
+  echo "    warning: no $GPG_ID_FILE — exporting ALL secret keys"
+  gpg --export-secret-keys --armor >"$WORK/gpg-secret.asc"
+fi
 gpg --export-ownertrust >"$WORK/gpg-trust.txt"
 chmod 600 "$WORK/gpg-secret.asc" "$WORK/gpg-trust.txt"
 echo "    included: gpg-secret.asc + gpg-trust.txt"
