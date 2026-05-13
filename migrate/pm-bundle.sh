@@ -75,9 +75,11 @@ echo "    bundle contains your full password store + GPG private key."
 echo
 
 # Write tarball first, then encrypt as a separate step. Avoids stdin
-# contention between tar and the pinentry prompt.
-TAR="$WORK/bundle.tar.gz"
-tar -C "$WORK" --exclude='./bundle.tar.gz' -czf "$TAR" .
+# contention with pinentry. Place the tar OUTSIDE $WORK so tar doesn't
+# see its own output file grow while reading.
+TAR="${WORK}.tar.gz"
+trap 'rm -rf "$WORK" "$TAR"' EXIT
+tar -C "$WORK" -czf "$TAR" .
 gpg --symmetric --cipher-algo AES256 --output "$OUT" "$TAR"
 
 chmod 600 "$OUT"
