@@ -1,0 +1,38 @@
+#compdef pm
+
+_pm() {
+  local STORE_DIR="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
+  local -a commands
+  commands=(
+    'ls:list all entries'
+    'list:list all entries'
+    'add:add new entry'
+    'user:show username for entry'
+    'pass:copy password to clipboard'
+    'copy:copy password to clipboard'
+    'rm:remove entry'
+    'remove:remove entry'
+    'del:remove entry'
+    'delete:remove entry'
+    'mv:rename entry'
+    'move:rename entry'
+    'rename:rename entry'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe 'command' commands
+    return
+  fi
+
+  case "${words[2]}" in
+    user|pass|copy|rm|remove|del|delete|mv|move|rename)
+      [[ -d "$STORE_DIR" ]] || return
+      local -a entries
+      entries=( ${(f)"$(cd "$STORE_DIR" && find . -type f -name '*.gpg' 2>/dev/null \
+        | sed -e 's|^\./||' -e 's|\.gpg$||' | sort)"} )
+      _multi_parts / entries
+      ;;
+  esac
+}
+
+_pm "$@"

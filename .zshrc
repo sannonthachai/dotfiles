@@ -84,6 +84,10 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 # Run autosuggestion fetch asynchronously — prompt doesn't block
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
+# Custom zsh completions from dotfiles repo (must be on fpath before compinit
+# inside oh-my-zsh.sh runs).
+fpath=("$HOME/.zsh/completions" $fpath)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

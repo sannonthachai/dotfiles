@@ -72,7 +72,8 @@ if [ -d "$ZSH_DIR" ]; then
 fi
 
 # --- Shell / editor ---
-link .zshrc          "$HOME/.zshrc"
+link .zshrc                  "$HOME/.zshrc"
+link .zsh/completions        "$HOME/.zsh/completions"
 link .gitconfig      "$HOME/.gitconfig"
 link .editorconfig   "$HOME/.editorconfig"
 
