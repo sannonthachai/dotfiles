@@ -1,11 +1,11 @@
 ---
 name: Machine-migration scripts in dotfiles
-description: Pointer to migrate/{bundle,restore,projects-audit,projects-bundle,projects-restore}.sh in the personal dotfiles repo for moving secrets and projects between machines (e.g. WSL → macOS)
+description: Pointer to migrate/{bundle,restore,projects-*,pm-*}.sh in the personal dotfiles repo for moving secrets, projects, and password-store between machines (e.g. WSL → macOS)
 type: reference
 originSessionId: 39afa9be-66f8-452f-afa5-9a3a6f74d59d
 ---
 
-The personal dotfiles repo has a `migrate/` directory with two independent flows for moving to a new machine (e.g. WSL → macOS). Both produce passphrase-encrypted tarballs that the user transfers manually (USB / Syncthing / scp).
+The personal dotfiles repo has a `migrate/` directory with three independent flows for moving to a new machine (e.g. WSL → macOS). Both produce passphrase-encrypted tarballs that the user transfers manually (USB / Syncthing / scp).
 
 ## Secrets flow (small bundle, credentials only)
 
@@ -26,6 +26,13 @@ The personal dotfiles repo has a `migrate/` directory with two independent flows
 
 - Mirror exact paths (`~/workspaces/...`, `~/sannonthachai/...`) on the destination, **not** macOS-conventional `~/Projects/`. Reason: avoids breaking hard-coded paths in user's scripts and notes.
 - Dirty repos: bundle diff + untracked + stash, **not** full tree. Reason: 100s of MB → low single-digit MB per dirty repo. Trade-off: requires destination to clone latest from remote, so user should push WIP work before migrating when possible.
+
+## pm flow (password-store + GPG key only)
+
+Focused alternative to the full secrets bundle when only `pm` data needs to move (added 2026-05-13).
+
+- `migrate/pm-bundle.sh` — SOURCE: packs `~/.password-store/` (respects `$PASSWORD_STORE_DIR`) + exported GPG secret keys + ownertrust into `~/pm-bundle.tar.gz.gpg`. Fails fast if no GPG secret key is present (without it the store is unreadable).
+- `migrate/pm-restore.sh` — DESTINATION: imports the GPG key FIRST (before restoring the store, so pass can decrypt immediately), restores `~/.password-store/` with overwrite prompt, then runs a `pass show` against the first `*.gpg` entry as a sanity check.
 
 ## Cross-cutting notes
 
