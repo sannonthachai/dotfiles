@@ -34,6 +34,36 @@ link() {
   echo "    linked: $dest -> $src"
 }
 
+# --- Homebrew (macOS) + Brewfile ---
+# Install Homebrew if missing, then apply the Brewfile (CLI tools + GUI casks).
+# Brewfile is the source of truth for what gets installed on a new Mac; the
+# per-tool `install_pkg` blocks below are kept as a safety net for Linux/WSL.
+if [ "$OS" = "Darwin" ]; then
+  if ! command -v brew >/dev/null 2>&1; then
+    if command -v curl >/dev/null 2>&1; then
+      echo "    installing Homebrew"
+      NONINTERACTIVE=1 /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      # Add brew to PATH for the rest of this script
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      elif [ -x /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+      fi
+    else
+      echo "    ! curl not found — install Homebrew manually: https://brew.sh"
+    fi
+  else
+    echo "    homebrew already installed: $(command -v brew)"
+  fi
+
+  if command -v brew >/dev/null 2>&1 && [ -f "$REPO_DIR/Brewfile" ]; then
+    echo "    applying Brewfile (brew bundle)"
+    brew bundle --file="$REPO_DIR/Brewfile" || \
+      echo "    ! brew bundle had failures — continuing"
+  fi
+fi
+
 # --- oh-my-zsh + plugins/theme referenced by .zshrc ---
 # Installed before symlinking .zshrc so the first `zsh` after install works.
 ZSH_DIR="${ZSH:-$HOME/.oh-my-zsh}"
