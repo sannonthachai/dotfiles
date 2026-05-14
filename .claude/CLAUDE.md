@@ -37,7 +37,7 @@ I'm learning Vim — treat me as a Vim beginner/intermediate when explaining mot
 **Plugin manager:** vim-plug
 **Leader:** `,` (comma) — localleader also `,`
 **Theme:** gruvbox dark (`background=dark`, `g:gruvbox_contrast_dark='medium'`)
-**Clipboard:** `unnamedplus` (system clipboard shared)
+**Clipboard:** `unnamed,unnamedplus` (system clipboard shared — `unnamed` for macOS NSPasteboard, `unnamedplus` for Linux X11)
 **Mouse:** disabled — keyboard only
 
 ### Installed plugins
