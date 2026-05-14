@@ -143,12 +143,11 @@ export EDITOR='vim'
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/.local/bin
 
-# GO path
-export GOPATH=$HOME/Golang
-export GOBIN=$HOME/Golang/bin
-export GOCACHE=$HOME/.cache
+# Go — GOROOT is auto-detected from the `go` binary (don't hardcode).
+# Homebrew installs go to /opt/homebrew/bin; user-installed binaries go to
+# $GOPATH/bin which we add to PATH.
+export GOPATH=$HOME/go
 export GO111MODULE=on
-export GOPRIVATE=""
 export PATH=$PATH:$GOPATH/bin
 
 # RUST
@@ -245,10 +244,6 @@ alias genpass=~/sannonthachai/my-scripts/generate-password.sh
 alias getmypass=~/sannonthachai/my-scripts/my-pass.sh
 alias genjwt='node -e "console.log(require(\"crypto\").randomBytes(32).toString(\"hex\"))"'
 # alias vi='nvim'
-
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools

@@ -9,6 +9,7 @@ brew "htop"             # process viewer
 brew "ripgrep"          # rg — used by vim ,/  and rg helpers
 brew "tmux"             # terminal multiplexer
 brew "vim"              # Homebrew vim (Apple's /usr/bin/vim has broken clipboard)
+brew "go"               # Go toolchain
 brew "node"             # required by coc.nvim, instant-markdown-d, claude-code CLI
 brew "pass"             # password-store (gpg-backed CLI password manager)
 
