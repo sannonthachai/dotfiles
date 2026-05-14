@@ -146,6 +146,9 @@ export PATH=$PATH:$HOME/.local/bin
 # Go — GOROOT is auto-detected from the `go` binary (don't hardcode).
 # Homebrew installs go to /opt/homebrew/bin; user-installed binaries go to
 # $GOPATH/bin which we add to PATH.
+# Explicitly unset GOROOT in case an old value was inherited from a long-lived
+# tmux/session that started before this change.
+unset GOROOT
 export GOPATH=$HOME/go
 export GO111MODULE=on
 export PATH=$PATH:$GOPATH/bin
