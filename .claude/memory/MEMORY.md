@@ -1,10 +1,11 @@
 - [User profile](user_profile.md) — SWE + DevOps, Go/TS/SQL, Huawei Cloud, K8s+ArgoCD
+- [Current machine](user_environment.md) — MacBook (Apple Silicon, macOS) — replaces prior WSL2/Windows setup; brew at /opt/homebrew
 - [Response style and language](feedback_response_style.md) — short by default, teach on request, mirror Thai/English
 - [Workflow preferences](feedback_workflow.md) — plan big changes, ask when unclear, confirm destructive ops
 - [Code style preferences](feedback_code_style.md) — small funcs, early returns, explicit error handling (Go/TS)
 - [Personal dotfiles repo](reference_dotfiles.md) — ~/sannonthachai/dotfiles (Claude config); ~/.dotfiles still holds vim/tmux/zsh from brother
 - [Dotfiles migration plan (Option B)](project_dotfiles_migration.md) — future: migrate vim/tmux/zsh/git from ~/.dotfiles into personal repo
-- [Terminal emulator](user_terminal.md) — now WezTerm (Alacritty → Windows Terminal → WezTerm); CLAUDE.md "## Terminal" still says Alacritty, stale
+- [Terminal emulator](user_terminal.md) — WezTerm on macOS (Apple Silicon); Cmd-based shortcuts, tmux handles splits
 - [Grammar-check user input](feedback_grammar_check.md) — correct English grammar, show fix, then answer; also suggest better/native rewrites even when grammatically correct
 - [Custom Claude Code skills](reference_claude_skills.md) — init-with-history & update-claude-md installed at ~/.claude/skills/; session-load gotcha
 - [Symlink safety under ~/.claude](feedback_symlink_safety.md) — ~/.claude/{agents,skills} are dir-symlinks into dotfiles; rm there deletes repo content. Always readlink before destructive ops

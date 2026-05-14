@@ -5,7 +5,7 @@
 - Primary stacks: Go (Golang), TypeScript/JavaScript, SQL
 - DevOps tools: Docker, Kubernetes, Terraform, Ansible, ArgoCD, K9s, GitHub Actions, GitLab CI, Jenkins
 - Cloud: Huawei Cloud (primary)
-- Environment: WSL2 on Windows (Ubuntu), zsh + oh-my-zsh with **powerlevel10k** theme
+- Environment: macOS on MacBook (Apple Silicon, brew at `/opt/homebrew`), zsh + oh-my-zsh with **powerlevel10k** theme. Previously: WSL2 on Windows (Ubuntu).
 - Personal dotfiles: `~/sannonthachai/dotfiles` (github.com/sannonthachai/dotfiles) — source of truth for `.vimrc`, `.zshrc`, `.tmux.conf`, `.gitconfig`, nvim, alacritty, Claude Code. Home files are symlinks into the repo (managed via `install.sh`).
 
 ## Response Style
@@ -92,17 +92,17 @@ When suggesting tmux tips:
 - Prefer keyboard workflows — no mouse.
 
 ## Terminal
-**Alacritty** on Windows (installed via winget, `C:\Program Files\Alacritty\`).
-Config at `%APPDATA%\alacritty\alacritty.toml` — also mirrored in the personal
-dotfiles repo at `.config/alacritty/alacritty.toml`.
+**WezTerm** on macOS (installed via brew cask). Config at
+`~/sannonthachai/dotfiles/.config/wezterm/wezterm.lua`.
 
-- Launches `wsl.exe` directly into Ubuntu zsh
 - Font: **JetBrainsMono Nerd Font** at 11pt (required for powerlevel10k icons)
 - Theme: gruvbox dark (matches Vim)
-- Clipboard: `Ctrl-Shift-C` / `Ctrl-Shift-V`; selection auto-copies
+- Clipboard: `Cmd-C` / `Cmd-V` (macOS standard); selection auto-copies
 - Scrollback: 10000 lines
-- Font size: `Ctrl-+` / `Ctrl--` / `Ctrl-0` reset
+- Font size: `Cmd-+` / `Cmd--` / `Cmd-0` reset
+
+History: Alacritty (Windows/WSL2) → Windows Terminal → WezTerm.
 
 When suggesting terminal tips:
-- Assume no tabs/splits in Alacritty itself — tmux handles that.
+- Assume no tabs/splits in WezTerm itself — tmux handles that.
 - Keep configs terminal-agnostic where possible (e.g., don't hard-code terminal-specific escapes).

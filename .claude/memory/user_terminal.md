@@ -1,20 +1,18 @@
 ---
-name: Terminal emulator
-description: User uses WezTerm as their daily terminal on Windows/WSL2 (switched from Alacritty → Windows Terminal → WezTerm)
-type: user
-originSessionId: 9dc6070d-c368-45a3-a0a2-fc5274b36149
+name: terminal-emulator
+description: "User runs WezTerm on macOS (MacBook, Apple Silicon) as their daily terminal — moved off Windows/WSL2"
+metadata: 
+  node_type: memory
+  type: user
+  originSessionId: 2dad2bd1-bdfa-4d5d-99eb-e4a461de3719
 ---
-User now uses **WezTerm** as their terminal emulator on Windows, launching into WSL2 Ubuntu zsh.
 
-History: Alacritty → Windows Terminal → WezTerm (switched 2026-04-29).
+User's daily terminal is **WezTerm on macOS** (MacBook, Apple Silicon).
 
-Config lives in the dotfiles repo at `~/sannonthachai/dotfiles/.config/wezterm/wezterm.lua`. On Windows, `%USERPROFILE%\.wezterm.lua` is a stub that `dofile`s the WSL path via `\\wsl.localhost\Ubuntu\...`.
+History: Alacritty (Windows/WSL2) → Windows Terminal → WezTerm (switched 2026-04-29) → migrated to macOS (2026-05-14).
 
-Setup matches prior Alacritty config: gruvbox dark, JetBrainsMono Nerd Font 11pt (ligatures on), `Ctrl-Shift-C/V` copy/paste, `Ctrl +/-/0` font size, 10k scrollback, launches `wsl.exe --cd ~`. Tab bar hidden when single tab — tmux still handles multiplexing.
+Config lives in the dotfiles repo at `~/sannonthachai/dotfiles/.config/wezterm/wezterm.lua`. macOS-native — no WSL hop. Setup: gruvbox dark, JetBrainsMono Nerd Font 11pt (ligatures on), `Cmd-C/V` copy/paste, `Cmd +/-/0` font size, 10k scrollback. Tab bar hidden when single tab — tmux still handles multiplexing.
 
-Stale references to update when next editing:
-- `~/.claude/CLAUDE.md` "## Terminal" section still describes Alacritty.
-- `~/sannonthachai/dotfiles/CLAUDE.md` Layout/Portability sections still mention `alacritty/` (the wezterm dir is not yet documented there).
-- `.config/alacritty/alacritty.toml` still exists in the dotfiles repo.
+When suggesting terminal tips, assume WezTerm conventions (Lua config, built-in tabs/splits available but unused in favor of tmux) and macOS keybindings (Cmd, not Ctrl-Shift).
 
-When suggesting terminal tips, assume WezTerm conventions (Lua config, built-in tabs/splits available but unused in favor of tmux).
+Related: [[user-environment]]
