@@ -9,3 +9,4 @@
 - [Custom Claude Code skills](reference_claude_skills.md) — init-with-history & update-claude-md installed at ~/.claude/skills/; session-load gotcha
 - [Symlink safety under ~/.claude](feedback_symlink_safety.md) — ~/.claude/{agents,skills} are dir-symlinks into dotfiles; rm there deletes repo content. Always readlink before destructive ops
 - [Machine-migration scripts](reference_migrate_scripts.md) — dotfiles/migrate/ has two flows: secrets (bundle.sh/restore.sh) and projects (projects-audit/bundle/restore.sh) for ~/workspaces/ + ~/sannonthachai/
+- [Vim clipboard on macOS](reference_vim_clipboard_macos.md) — needs brew vim + clipboard=unnamed (not unnamedplus alone); Apple's vim has broken clipboard despite +clipboard

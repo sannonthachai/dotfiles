@@ -114,8 +114,9 @@ noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 
-" clipboard
-set clipboard=unnamedplus
+" clipboard — 'unnamed' is required on macOS (maps to * = NSPasteboard);
+" 'unnamedplus' alone is X11-only and silently no-ops on macOS.
+set clipboard=unnamed,unnamedplus
 
 " no mouse
 set mouse=
