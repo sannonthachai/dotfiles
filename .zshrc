@@ -290,3 +290,28 @@ encode() {
 if [[ -n "$WAYLAND_DISPLAY" && ! -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]]; then
     unset WAYLAND_DISPLAY
 fi
+
+# Open a folder as an Obsidian vault, like `code .`.
+# Registers the folder in Obsidian's global config first (otherwise the
+# obsidian:// URL scheme errors with "Unable to find a vault for the URL"),
+# then launches Obsidian and asks it to open that vault.
+obs() {
+  local target="${1:-$PWD}"
+  target=$(cd "$target" 2>/dev/null && pwd) || { echo "obs: no such directory: $1" >&2; return 1; }
+
+  local cfg="$HOME/Library/Application Support/obsidian/obsidian.json"
+  [[ -f "$cfg" ]] || { echo "obs: Obsidian config not found — launch Obsidian once first" >&2; return 1; }
+
+  # Register the vault if not already known.
+  if ! jq -e --arg p "$target" '.vaults | to_entries | any(.value.path == $p)' "$cfg" >/dev/null; then
+    local id ts tmp
+    id=$(openssl rand -hex 8)
+    ts=$(($(date +%s) * 1000))
+    tmp=$(mktemp)
+    jq --arg id "$id" --arg p "$target" --argjson ts "$ts" \
+       '.vaults[$id] = {path:$p, ts:$ts, open:true}' "$cfg" > "$tmp" && mv "$tmp" "$cfg"
+    echo "obs: registered $target as a new vault"
+  fi
+
+  open "obsidian://open?path=$(python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1]))' "$target")"
+}
