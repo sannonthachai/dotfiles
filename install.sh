@@ -150,6 +150,20 @@ link .vimrc                              "$HOME/.vimrc"
 link .config/nvim/init.vim               "$HOME/.config/nvim/init.vim"
 link .config/nvim/coc-settings.json      "$HOME/.config/nvim/coc-settings.json"
 
+# instant-markdown-d — Node.js daemon required by vim-instant-markdown.
+# Without it, opening .md files in vim throws "Node.js server unavailable".
+if ! command -v instant-markdown-d >/dev/null 2>&1; then
+  if command -v npm >/dev/null 2>&1; then
+    echo "    installing instant-markdown-d via npm"
+    npm install -g instant-markdown-d
+  else
+    echo "    ! npm not found — skipping instant-markdown-d install."
+    echo "      Install Node.js/npm, then run: npm install -g instant-markdown-d"
+  fi
+else
+  echo "    instant-markdown-d already installed: $(command -v instant-markdown-d)"
+fi
+
 # --- tmux ---
 if ! command -v tmux >/dev/null 2>&1; then
   case "$OS" in
