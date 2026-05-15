@@ -1,118 +1,127 @@
 # dotfiles
 
-My personal dotfiles — shell, editor, terminal, and Claude Code config.
+My personal dotfiles — shell, editor, terminal, Brew packages, and Claude Code config. Primary target is **macOS (Apple Silicon)**; `install.sh` also works on Linux/WSL2 as a fallback.
 
 ## What's in here
 
 ```
+Brewfile                       # Homebrew formulae + casks + taps (macOS source of truth)
+install.sh                     # bootstraps everything; symlinks repo files into $HOME
+
 .claude/
-├── CLAUDE.md                          # Claude Code global preferences (symlinked to ~/.claude/CLAUDE.md)
-└── memory/                            # Claude Code auto-memory (pointed at via autoMemoryDirectory)
+├── CLAUDE.md                  # Claude Code global preferences (symlinked to ~/.claude/CLAUDE.md)
+├── memory/                    # auto-memory (pointed at via autoMemoryDirectory)
+├── agents/                    # custom Claude Code subagents (symlinked as a directory)
+└── skills/                    # custom Claude Code skills:
+    ├── init-with-history/     #   init CLAUDE.md, mining conversation history
+    ├── update-claude-md/      #   surgical updates to an existing CLAUDE.md
+    └── brewfile-diff/         #   diff installed brew packages vs this Brewfile
 
 .config/
-├── alacritty/alacritty.toml           # Alacritty terminal (gruvbox dark, JetBrainsMono NF)
-└── nvim/                              # Neovim (shares CoC config with vim)
-    ├── init.vim
-    └── coc-settings.json
+├── wezterm/wezterm.lua        # primary terminal on macOS (gruvbox dark, JetBrainsMono NF)
+├── alacritty/alacritty.toml   # legacy terminal config (kept for Windows/WSL machines)
+└── nvim/                      # Neovim (shares CoC config with vim)
 
-.vimrc                                 # Vim config (plugins, keybindings, theme)
-.zshrc                                 # zsh config (oh-my-zsh, powerlevel10k)
-.tmux.conf                             # tmux (oh-my-tmux base)
-.tmux.conf.local                       # tmux user overrides
-.gitconfig                             # git settings
-.editorconfig                          # editor-agnostic indent/EOL rules
-install.sh                             # symlink everything into $HOME
-CLAUDE.md                              # project-level context for working IN this repo
-README.md                              # this file
+bin/                           # personal scripts on $PATH
+├── rke2-cert-check            #   report RKE2 cert expiry on a remote node
+└── pm                         #   project manager helper
+
+migrate/                       # one-shot machine-migration bundles (secrets + projects)
+
+.vimrc .zshrc .tmux.conf .tmux.conf.local .gitconfig .editorconfig
+CLAUDE.md                      # project context for working IN this repo
+README.md                      # this file
 ```
 
-## Setup on a new laptop (Linux or macOS)
-
-### 1. Install prerequisites
-
-Make sure these are installed first:
-
-- git, zsh, tmux, vim or neovim
-- [oh-my-zsh](https://ohmyz.sh/) and [powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [vim-plug](https://github.com/junegunn/vim-plug) (for Vim plugins)
-- [fzf](https://github.com/junegunn/fzf) and [ripgrep](https://github.com/BurntSushi/ripgrep)
-- Language tools you want: go, node/npm, python, terraform, etc.
-
-### 2. Clone and run the installer
+## Setup on a new MacBook
 
 ```bash
+# 1. Clone
 git clone git@github.com:sannonthachai/dotfiles.git ~/sannonthachai/dotfiles
 cd ~/sannonthachai/dotfiles
+
+# 2. Run the installer
 ./install.sh
 ```
 
-Existing non-symlink files in `$HOME` are backed up to `*.bak` before being replaced with symlinks.
+`install.sh` is idempotent and handles:
 
-### 3. Point Claude Code at the memory directory
+- Bootstrapping **Homebrew** (if missing) and running `brew bundle` against the `Brewfile` (CLI tools + GUI casks).
+- Cloning **oh-my-zsh**, **powerlevel10k**, `zsh-autosuggestions`, `fast-syntax-highlighting`.
+- Installing **vim-plug** (vim + nvim).
+- Installing **Claude Code CLI** and **instant-markdown-d** via npm.
+- Symlinking every config file into `$HOME` (existing non-symlink files are backed up to `*.bak` the first time).
+- Linking `bin/` scripts (`rke2-cert-check`, `pm`) into `~/bin/`.
 
-Edit `~/.claude/settings.json`:
+### One-time post-install steps
 
-```json
-{
-  "effortLevel": "medium",
-  "autoMemoryDirectory": "~/sannonthachai/dotfiles/.claude/memory"
-}
-```
+1. **Point Claude Code at the memory directory** — edit `~/.claude/settings.json`:
 
-### 4. Install Vim plugins
+   ```json
+   {
+     "autoMemoryDirectory": "~/sannonthachai/dotfiles/.claude/memory"
+   }
+   ```
+
+2. **Install Vim plugins:**
+
+   ```bash
+   vim +PlugInstall +qall
+   ```
+
+3. **Reload tmux** (if a session is already running):
+
+   ```bash
+   tmux source-file ~/.tmux.conf
+   ```
+
+## Setup on Linux / WSL2
+
+`install.sh` works on Linux too — it skips the Homebrew section and falls back to per-tool `install_pkg` calls (apt-based). Run the same `./install.sh`.
+
+## Brewfile — keeping installed packages in sync
+
+`Brewfile` is the source of truth for what should be installed on macOS. After installing something ad-hoc with `brew install`, capture it:
 
 ```bash
-vim +PlugInstall +qall
+# Inside a Claude Code session
+/brewfile-diff
 ```
 
-### 5. Reload tmux
+The skill diffs `brew leaves`, `brew list --cask`, and `brew tap` against `Brewfile` and offers to reconcile. Or do it manually:
 
 ```bash
-tmux source-file ~/.tmux.conf
+brew leaves                            # installed top-level formulae
+brew list --cask                       # installed casks
+brew bundle check --file=Brewfile      # what's declared but missing
+brew bundle --file=Brewfile            # install everything declared
 ```
 
-## Setup on Windows (for the Alacritty config)
+## External tools the Vim config depends on
 
-Alacritty on Windows reads `%APPDATA%\alacritty\alacritty.toml`. The installer doesn't
-handle Windows, so copy it manually:
-
-```powershell
-Copy-Item "\\wsl.localhost\Ubuntu\home\chai\sannonthachai\dotfiles\.config\alacritty\alacritty.toml" `
-          "$env:APPDATA\alacritty\alacritty.toml"
-```
-
-## External tools my Vim config depends on
-
-Install these and make sure they're on `$PATH`:
+The `Brewfile` (or apt fallback in `install.sh`) installs the binaries below. CoC extension formatters (`black`, `prettier`) are pulled in lazily when their CoC extension activates.
 
 | Tool | Purpose |
 |---|---|
-| `fzf` | Fuzzy finder (`Ctrl-p`, `,b`, `,/`) |
-| `rg` (ripgrep) | Text search backend for `,/` |
-| `black` | Python formatter |
-| `prettier` | JS/TS/YAML/MD/HTML/JSON formatter |
-| `terraform-ls` | Terraform LSP (via CoC) |
+| `fzf`, `rg` (ripgrep) | Fuzzy finder + text search (`Ctrl-p`, `,/`) |
 | `gofmt`, `goimports` | Go formatters |
 | `shfmt` | Shell script formatter |
+| `terraform-ls` | Terraform LSP (via CoC; install manually if not present) |
+| `black`, `prettier` | Python / JS-YAML-MD formatters (managed by CoC extensions) |
 
 ## Making changes
 
-- Edit files directly in this repo, or through symlinks (`~/.vimrc`, `~/.zshrc`, etc.)
-- Commit and push when ready:
+Edit files **in this repo** — `$HOME` files are symlinks back here. Then:
 
-  ```bash
-  cd ~/sannonthachai/dotfiles
-  git add -A && git commit -m "your message" && git push
-  ```
+```bash
+git add -A && git commit -m "your message" && git push
+```
 
-## Updating from remote
-
-On another machine already set up:
+## Updating another machine
 
 ```bash
 cd ~/sannonthachai/dotfiles
 git pull
 ```
 
-Changes take effect immediately via symlinks. For Vim plugin additions, also run
-`:PlugInstall` inside Vim.
+Changes take effect immediately via symlinks. For Vim plugin additions, also run `:PlugInstall`. For new Brewfile entries, run `brew bundle --file=Brewfile`.
