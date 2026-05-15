@@ -8,6 +8,7 @@ User has custom Claude Code skills installed at `~/.claude/skills/` (also mirror
 
 - **`init-with-history`** — like `/init`, but mines the current conversation for design decisions, trade-offs, and "why" rationale and folds them into a fresh `CLAUDE.md`. Use for first-time CLAUDE.md creation after a substantive session.
 - **`update-claude-md`** — surgically updates an *existing* `CLAUDE.md` with new context (rotations, infra changes, gotchas, rejected alternatives) without rewriting unchanged sections. Default target is `./CLAUDE.md`; accepts a path arg.
+- **`brewfile-diff`** — diffs installed Homebrew packages (`brew leaves` / `brew list --cask` / `brew tap`) against the dotfiles `Brewfile` and offers to reconcile. macOS-only. Default Brewfile path is `~/sannonthachai/dotfiles/Brewfile`; accepts a path arg.
 
 **Gotcha — session-scoped skill loading:** Claude Code loads skills at session start. Any skill created or edited mid-session won't appear in `/skills` or as a slash command until the session is restarted. If `/update-claude-md` (or any newly-added skill) shows "Unknown skill", tell the user to restart, or follow the skill's procedure manually by reading its `SKILL.md` and executing the steps.
 
