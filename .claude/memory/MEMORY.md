@@ -11,3 +11,4 @@
 - [Symlink safety under ~/.claude](feedback_symlink_safety.md) — ~/.claude/{agents,skills} are dir-symlinks into dotfiles; rm there deletes repo content. Always readlink before destructive ops
 - [Machine-migration scripts](reference_migrate_scripts.md) — dotfiles/migrate/ has two flows: secrets (bundle.sh/restore.sh) and projects (projects-audit/bundle/restore.sh) for ~/workspaces/ + ~/sannonthachai/
 - [Vim clipboard on macOS](reference_vim_clipboard_macos.md) — needs brew vim + clipboard=unnamed (not unnamedplus alone); Apple's vim has broken clipboard despite +clipboard
+- [ssh-controller: "check information.md" trigger](feedback_ssh_controller_info_trigger.md) — pointing at information.md = run full new-host bootstrap into ./config; don't ask for details
