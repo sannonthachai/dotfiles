@@ -32,6 +32,7 @@ cask "wezterm"          # primary terminal emulator
 cask "visual-studio-code"
 cask "obsidian"
 cask "tableplus"        # multi-DB GUI (Postgres, MySQL, Redis, SQLite, MS SQL, Mongo)
+cask "insomnia"         # REST/GraphQL API client
 cask "discord"
 cask "microsoft-teams"
 cask "openvpn-connect"  # corp VPN client
