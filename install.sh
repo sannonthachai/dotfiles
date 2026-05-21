@@ -250,6 +250,7 @@ link .claude/skills "$HOME/.claude/skills"
 # --- Personal scripts (bin/) ---
 link bin/rke2-cert-check "$HOME/bin/rke2-cert-check"
 link bin/pm              "$HOME/bin/pm"
+link bin/genpass         "$HOME/bin/genpass"
 
 # pm depends on pass + gpg
 install_pkg pass

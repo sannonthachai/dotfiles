@@ -243,7 +243,6 @@ alias x='startx'
 alias top="htop"
 [[ -x /snap/k9s/current/bin/k9s ]] && alias k9s=/snap/k9s/current/bin/k9s
 alias speedtest=speedtest-cli --secure
-alias genpass=~/sannonthachai/my-scripts/generate-password.sh
 alias getmypass=~/sannonthachai/my-scripts/my-pass.sh
 alias genjwt='node -e "console.log(require(\"crypto\").randomBytes(32).toString(\"hex\"))"'
 # alias vi='nvim'
