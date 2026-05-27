@@ -26,6 +26,7 @@ brew "typst"            # markup-based typesetting
 brew "colima"           # Docker runtime on macOS (Linux VM)
 brew "docker"           # docker CLI
 brew "docker-compose"   # compose v2 CLI plugin
+brew "docker-buildx"    # buildx CLI plugin (multi-platform builds)
 brew "kubernetes-cli"   # kubectl
 brew "helm"             # Helm 3
 brew "k9s"              # K8s TUI
