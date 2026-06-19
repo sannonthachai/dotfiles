@@ -245,6 +245,8 @@ alias top="htop"
 alias speedtest=speedtest-cli --secure
 alias getmypass=~/sannonthachai/my-scripts/my-pass.sh
 alias genjwt='node -e "console.log(require(\"crypto\").randomBytes(32).toString(\"hex\"))"'
+# EA AI Monitor (Mac M5) — eamon [--once|--log|--setup|--help]
+alias eamon='~/Downloads/EA-AI-Monitor.command'
 # alias vi='nvim'
 
 export DOTNET_ROOT=$HOME/.dotnet
@@ -312,3 +314,10 @@ obs() {
 
   open "obsidian://open?path=$(python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1]))' "$target")"
 }
+
+# direnv — must stay last so it hooks after oh-my-zsh/p10k init.
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+
+# --- Claude Code account profiles ---
+alias cc-work='CLAUDE_CONFIG_DIR=$HOME/.claude claude'           # default / work account
+alias cc-personal='CLAUDE_CONFIG_DIR=$HOME/.claude-personal claude'  # second account
