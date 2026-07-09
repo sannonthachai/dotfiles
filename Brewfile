@@ -11,6 +11,7 @@ brew "fastfetch"        # system info splash
 brew "fzf"              # fuzzy finder (vim ,b /,/  +  zsh ctrl-r)
 brew "htop"             # process viewer
 brew "ripgrep"          # rg — used by vim ,/  and rg helpers
+brew "jq"               # JSON processor (CLI/pipelines)
 brew "tmux"             # terminal multiplexer
 brew "telnet"           # network debug
 brew "vim"              # Homebrew vim (Apple's /usr/bin/vim has broken clipboard)
@@ -21,6 +22,8 @@ brew "rtk"              # LLM token-killer CLI proxy (Claude Code Bash hook)
 brew "pass"             # password-store (gpg-backed CLI password manager)
 brew "hudochenkov/sshpass/sshpass" # password-based SSH automation
 brew "libpq"            # Postgres client (psql) — keg-only, link with --force
+brew "pgbadger"         # PostgreSQL log analyzer
+brew "instantclienttap/instantclient/instantclient-basic" # Oracle Instant Client
 brew "pandoc"           # universal document converter
 brew "poppler"          # PDF CLI tools (pdftotext, pdfinfo, pdfimages)
 brew "typst"            # markup-based typesetting
@@ -35,6 +38,7 @@ brew "helm"             # Helm 3
 brew "k9s"              # K8s TUI
 brew "hashicorp/tap/terraform" # Terraform CLI (BSL — via hashicorp/tap)
 brew "argocd"           # ArgoCD CLI (GitOps deploys)
+brew "minio/stable/mc"  # MinIO/S3-compatible object storage client
 brew "direnv"           # auto-loads .envrc (huawei-iac OBS checksum env vars)
 
 # --- GUI apps (casks) ---
