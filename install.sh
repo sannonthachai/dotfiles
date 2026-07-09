@@ -239,6 +239,9 @@ else
 fi
 
 link .claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
+# RTK.md is referenced by CLAUDE.md via `@RTK.md` (resolves to ~/.claude/RTK.md).
+# The rtk Bash hook in settings.json is NOT tracked — regenerate with `rtk init -g`.
+link .claude/RTK.md "$HOME/.claude/RTK.md"
 # Memory directory is NOT symlinked — it's pointed to via autoMemoryDirectory
 # in ~/.claude/settings.json. See README.md step 4.
 

@@ -106,3 +106,5 @@ History: Alacritty (Windows/WSL2) → Windows Terminal → WezTerm.
 When suggesting terminal tips:
 - Assume no tabs/splits in WezTerm itself — tmux handles that.
 - Keep configs terminal-agnostic where possible (e.g., don't hard-code terminal-specific escapes).
+
+@RTK.md

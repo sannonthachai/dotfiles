@@ -16,10 +16,13 @@ brew "telnet"           # network debug
 brew "vim"              # Homebrew vim (Apple's /usr/bin/vim has broken clipboard)
 brew "go"               # Go toolchain
 brew "node"             # required by coc.nvim, instant-markdown-d, claude-code CLI
+brew "uv"               # fast Python package/tool manager (installs mempalace)
+brew "rtk"              # LLM token-killer CLI proxy (Claude Code Bash hook)
 brew "pass"             # password-store (gpg-backed CLI password manager)
 brew "hudochenkov/sshpass/sshpass" # password-based SSH automation
 brew "libpq"            # Postgres client (psql) — keg-only, link with --force
 brew "pandoc"           # universal document converter
+brew "poppler"          # PDF CLI tools (pdftotext, pdfinfo, pdfimages)
 brew "typst"            # markup-based typesetting
 
 # --- DevOps / containers ---
@@ -32,6 +35,7 @@ brew "helm"             # Helm 3
 brew "k9s"              # K8s TUI
 brew "hashicorp/tap/terraform" # Terraform CLI (BSL — via hashicorp/tap)
 brew "argocd"           # ArgoCD CLI (GitOps deploys)
+brew "direnv"           # auto-loads .envrc (huawei-iac OBS checksum env vars)
 
 # --- GUI apps (casks) ---
 cask "google-chrome"
