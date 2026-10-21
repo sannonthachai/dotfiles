@@ -15,6 +15,7 @@ brew "fzf"              # fuzzy finder (vim ,b /,/  +  zsh ctrl-r)
 brew "htop"             # process viewer
 brew "ripgrep"          # rg — used by vim ,/  and rg helpers
 brew "jq"               # JSON processor (CLI/pipelines)
+brew "gh"               # GitHub CLI (PRs, issues, API)
 brew "glab"             # GitLab CLI (MRs, pipelines, repos)
 brew "tmux"             # terminal multiplexer
 brew "telnet"           # network debug
@@ -58,3 +59,4 @@ cask "discord"
 cask "microsoft-teams"
 cask "openvpn-connect"  # corp VPN client
 cask "ngrok"            # tunnel local ports to public URLs
+cask "codex"            # OpenAI Codex coding agent (terminal)
