@@ -279,3 +279,10 @@ echo "  1. Edit ~/.claude/settings.json and add:"
 echo '       "autoMemoryDirectory": "~/sannonthachai/dotfiles/.claude/memory"'
 echo "  2. Open Vim and run :PlugInstall"
 echo "  3. For tmux, reload with: tmux source-file ~/.tmux.conf"
+
+# --- WezTerm (macOS primary terminal) ---
+case "$OS" in
+  Darwin)
+    link .config/wezterm/wezterm.lua "$HOME/.config/wezterm/wezterm.lua"
+    ;;
+esac

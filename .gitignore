@@ -6,3 +6,11 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json
+
+# Claude Code auto-managed skill dirs (org-synced + trash)
+.claude/skills/synced/
+.claude/skills/.trash/

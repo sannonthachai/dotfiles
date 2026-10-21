@@ -3,6 +3,10 @@
 - [Response style and language](feedback_response_style.md) — short by default, teach on request, mirror Thai/English
 - [Workflow preferences](feedback_workflow.md) — plan big changes, ask when unclear, confirm destructive ops
 - [Code style preferences](feedback_code_style.md) — small funcs, early returns, explicit error handling (Go/TS)
+- [huawei-iac OBS/VPN quirks](project_huawei_iac_obs_vpn.md) — run TF off-VPN; OBS writes need checksum env vars; VPN→OBS impossible (no VPCEP, 100.125 in reserved 100.64/10)
+- [huawei-iac repo structure](project_huawei_iac_structure.md) — 5 accounts (adm/dev/prod/sec/shared); monitoring DNS records are TF-managed in accounts/sec dns_records map, NOT console; SGs still manual
+- [JVFS SP archive migration](project_jvfs_sp_archive_migration.md) — copied FTS-DCC-NEW manual archive → app JVFS-Documents, Thai-month → YYYY/MM, ~1.7k files; copy-2568-to-jvfs-documents.py
+- [JVFS M5 OCR shared config](project_jvfs_m5_ocr_shared_config.md) — M5 ollama/OCR config is shared+tuned by another team; don't change unilaterally. flash-attn-off fixes wedge but OOMs at img_dim 2200
 - [Personal dotfiles repo](reference_dotfiles.md) — ~/sannonthachai/dotfiles (Claude config); ~/.dotfiles still holds vim/tmux/zsh from brother
 - [Dotfiles migration plan (Option B)](project_dotfiles_migration.md) — future: migrate vim/tmux/zsh/git from ~/.dotfiles into personal repo
 - [Terminal emulator](user_terminal.md) — WezTerm on macOS (Apple Silicon); Cmd-based shortcuts, tmux handles splits
@@ -12,3 +16,19 @@
 - [Machine-migration scripts](reference_migrate_scripts.md) — dotfiles/migrate/ has two flows: secrets (bundle.sh/restore.sh) and projects (projects-audit/bundle/restore.sh) for ~/workspaces/ + ~/sannonthachai/
 - [Vim clipboard on macOS](reference_vim_clipboard_macos.md) — needs brew vim + clipboard=unnamed (not unnamedplus alone); Apple's vim has broken clipboard despite +clipboard
 - [ssh-controller: "check information.md" trigger](feedback_ssh_controller_info_trigger.md) — pointing at information.md = run full new-host bootstrap into ./config; don't ask for details
+- [EA gitops RBAC accounts](project_ea_gitops_rbac.md) — kustomize/infra/rbac/<role>/; ea-prd-rke2 only has ea-prod + power-support-prod; sync via kubectl patch when argocd CLI points at wallet dev
+- [Wallet GitLab + CI pipeline](project_wallet_gitlab_pipeline.md) — ssh wallet-share-gitlab; inspect repos via rails disk_path; shared java template + .m2 cache fix (2026-06-30)
+- [Wallet ktb-transaction-ingest CronJob](project_wallet_ktb_transaction_ingest.md) — SFTP→OBS rclone CronJob; per-svc ArgoCD app (manual sync); SFTP needs SG both sides (CCE outbound + host inbound)
+- [Wallet Keycloak PROD](project_wallet_keycloak_prod.md) — keycloakx on HUAWEI-WALLET-PROD; external RDS keycloak_prod@db-pg-keycloak; ArgoCD app pins git TAG (not stored in gitops), applied manual; https://keycloak.divinewallet.co.th issuer (wildcard cert, split-horizon ELB 10.27.90.100)
+- [JVFS release leaves you on main](feedback_jvfs_branch_after_release.md) — checkout dev after a deploy; I twice committed features onto main
+- ["topic-cron" keyword (JVFS ThinkPad)](reference_jvfs_topic_cron_keyword.md) — means read docs/thinkpad-topic-cron.md and follow it; daily meeting-topic backfill
+- [jvfs-gitlab-runner disk cleanup](project_jvfs_gitlab_runner_disk.md) — root fs cannot grow (VG full); runner home bind-mounted to /data; root 81%→22%
+- [jvfs-sit-elk ELK stack](project_jvfs_sit_elk.md) — docker compose ELK; logstash `-f` a DIRECTORY (loads .bak/.swp); latent config break surfaced on recreate; ident-adm needs sudo for docker; `ts` field float-vs-ISO mapping conflict
+- [EA Harbor registry](project_ea_harbor_registry.md) — ea-harbor (192.168.242.167); create users via DB PBKDF2 (4096/16/hex 32ch, varchar(40)); classifier blocks auth writes → user runs via ! prefix
+- [JVFS GitLab registry cleanup](project_jvfs_registry_cleanup.md) — GC alone frees 0; keep set = gitops-pinned tags + newer; remove-unuse-image skill
+- [tipinsure cert rotation](project_tipinsure_cert_rotation.md) — 2026-09-17 swap verified OK, no change needed; next rotation before 2027-03-21; runbook in update-cert-insurance/CLAUDE.md
+- [JVFS DR ArgoCD OutOfSync](project_jvfs_dr_argocd_outofsync.md) — Prune=False orphan CMs + misplaced YAML fields; strict server dry-run to detect; known DR crashloops
+- [WAMS OCR / Jarvis OCR eval](project_jarvis_ocr_poa_eval.md) — replacing Ztrus for WAMS; repo ~/workspaces/jvfs/etc/wams-ocr; baseline POA 33%, DBD 59%, IDs 0% (model self-masks)
+- [Freshdesk middleware](project_freshdesk_middleware.md) — sit-freshdesk on jvfs-sit-cluster; Freshdesk tickets bucket 100/min (overall 400; sync 20/min); attachment URLs expire 300s; never run local sync alongside cluster (advisory lock)
+- [Tako Tour website](project_tako_tour_site.md) — ~/sannonthachai/travel-agency static client preview; kite logo (not squid); sample data; CMS next
+- [jv-cluster Discord DNS bypass](project_jv_cluster_coredns_discord.md) — 192.168.11.1 sinkholes discord; CoreDNS discord zones→8.8.8.8; PROD file only on jvfs-prod-k8s-1 (2026-10-20)
