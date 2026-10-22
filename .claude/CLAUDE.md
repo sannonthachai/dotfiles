@@ -30,6 +30,24 @@
 - When writing Kubernetes manifests or Helm charts, assume ArgoCD will deploy them.
 - For cloud-specific work, default to Huawei Cloud equivalents (CCE for Kubernetes, OBS for object storage, etc.) unless I say otherwise.
 
+## Frontend
+- When I ask to create a frontend service/app: **before writing code, propose a UI stack** (framework, CSS, component library, icons, forms, theme) with a one-line reason each, and ask me to confirm or pick an alternative.
+- Also **check https://21st.dev/community/templates (filter: Free / Open-source) first** and suggest 2-3 free templates that fit the app type (admin/dashboard, landing, SaaS, portfolio, commerce). For each: name, stack, license note, why it fits. Fetch the page live each time — listings change. Only suggest paid ones if I ask. Components: https://21st.dev/components (shadcn-style, copy-paste).
+- Free template sources to check after 21st.dev (pick by app type):
+  - Admin / internal tools: https://ui.shadcn.com/blocks, https://github.com/satnaing/shadcn-admin, https://themeselection.com (Sneat free), https://flowbite.com
+  - Landing / marketing: https://shadcnblocks.com, https://cruip.com, https://ui.aceternity.com, https://tailgrids.com, https://preline.co
+  - SaaS starters: https://vercel.com/templates, https://github.com/shadcn-ui/taxonomy
+  - Components (shadcn-compatible, copy-paste): https://magicui.design, https://originui.com, https://cult-ui.com, https://21st.dev/components
+- Suggest ~3 templates total, each: name, URL, stack, license, why it fits. Check license (MIT preferred) before recommending for commercial use.
+- Each suggestion must be a real, cloneable template with a live demo link (not a component library or block set). If the chosen template turns out unusable (paywalled, needs a hosted API key, dead repo), stop and propose 3 replacements — never fall back to a from-scratch build without asking.
+- Verify each candidate by fetching its repo page before suggesting (license, stars, archived/deprecated status, backend requirement). Present in this format:
+  1. **Name** (one-line fit note) / Repo URL / Demo URL / Stack + license + stars / Why it fits / Downside
+  End with a "Dropped:" line naming rejected candidates and the reason (archived, non-MIT, needs hosted key, dev-stage).
+- Known-good free commerce storefronts (re-verify before use): Shopco (github.com/mohammadoftadeh/next-ecommerce-shopco, shadcn, static data), Vercel Shop (github.com/vercel/shop, Next 16 + shadcn, needs Shopify), Spree Storefront (github.com/spree/storefront, needs Spree backend). Avoid: vercel/commerce (archived), medusajs/nextjs-starter-medusa (deprecated), yournextstore (needs hosted API key), saleor/storefront (FSL license).
+- Default proposal: Next.js + TypeScript (strict) + Tailwind CSS + shadcn/ui + lucide-react + react-hook-form/zod + TanStack Query, dark mode via `next-themes`.
+- Suggest alternatives when they fit better: Ant Design/MUI for data-heavy admin dashboards; Nuxt + Nuxt UI/PrimeVue for Vue; Astro + Tailwind for static sites; Go templates + HTMX + Tailwind/DaisyUI for minimal-JS apps with a Go backend.
+- Ask first if unclear: app type (dashboard vs public site), framework preference, existing design system/brand.
+
 ## Vim (learning)
 I'm learning Vim — treat me as a Vim beginner/intermediate when explaining motions, operators, or idioms, even though my config is advanced.
 
