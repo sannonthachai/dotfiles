@@ -47,6 +47,7 @@
 - Default proposal: Next.js + TypeScript (strict) + Tailwind CSS + shadcn/ui + lucide-react + react-hook-form/zod + TanStack Query, dark mode via `next-themes`.
 - Suggest alternatives when they fit better: Ant Design/MUI for data-heavy admin dashboards; Nuxt + Nuxt UI/PrimeVue for Vue; Astro + Tailwind for static sites; Go templates + HTMX + Tailwind/DaisyUI for minimal-JS apps with a Go backend.
 - Ask first if unclear: app type (dashboard vs public site), framework preference, existing design system/brand.
+- **Images:** when a frontend needs photos (product shots, hero, avatars, placeholders), source free ones from https://www.pexels.com. Pexels license: free for commercial use, no attribution required (credit is still nice), do not sell unaltered copies or imply endorsement. Search on the site (or Pexels API, free key) for the exact subject, pick the photo URL from `images.pexels.com`, and add that host to `images.remotePatterns` (Next.js) or equivalent. Keep a `credits.md` or comment listing photo URL + photographer. Do not hotlink from other stock sites or scrape Google Images.
 
 ## Vim (learning)
 I'm learning Vim — treat me as a Vim beginner/intermediate when explaining motions, operators, or idioms, even though my config is advanced.
