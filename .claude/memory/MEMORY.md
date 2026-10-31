@@ -16,7 +16,7 @@
 - [Machine-migration scripts](reference_migrate_scripts.md) — dotfiles/migrate/ has two flows: secrets (bundle.sh/restore.sh) and projects (projects-audit/bundle/restore.sh) for ~/workspaces/ + ~/sannonthachai/
 - [Vim clipboard on macOS](reference_vim_clipboard_macos.md) — needs brew vim + clipboard=unnamed (not unnamedplus alone); Apple's vim has broken clipboard despite +clipboard
 - [ssh-controller: "check information.md" trigger](feedback_ssh_controller_info_trigger.md) — pointing at information.md = run full new-host bootstrap into ./config; don't ask for details
-- [EA gitops RBAC accounts](project_ea_gitops_rbac.md) — kustomize/infra/rbac/<role>/; ea-prd-rke2 only has ea-prod + power-support-prod; sync via kubectl patch when argocd CLI points at wallet dev
+- [EA gitops RBAC accounts](project_ea_gitops_rbac.md) — kustomize/infra/rbac/<role>/; ea-prd-rke2 only has ea-prod + power-support-prod; DEV ArgoCD users live in gitlab.com gitops-ea dev/argo-cd (ctx rke-k8s-dev, no dots in names)
 - [Wallet GitLab + CI pipeline](project_wallet_gitlab_pipeline.md) — ssh wallet-share-gitlab; inspect repos via rails disk_path; shared java template + .m2 cache fix (2026-06-30)
 - [Wallet ktb-transaction-ingest CronJob](project_wallet_ktb_transaction_ingest.md) — SFTP→OBS rclone CronJob; per-svc ArgoCD app (manual sync); SFTP needs SG both sides (CCE outbound + host inbound)
 - [Wallet Keycloak PROD](project_wallet_keycloak_prod.md) — keycloakx on HUAWEI-WALLET-PROD; external RDS keycloak_prod@db-pg-keycloak; ArgoCD app pins git TAG (not stored in gitops), applied manual; https://keycloak.divinewallet.co.th issuer (wildcard cert, split-horizon ELB 10.27.90.100)
@@ -30,5 +30,5 @@
 - [JVFS DR ArgoCD OutOfSync](project_jvfs_dr_argocd_outofsync.md) — Prune=False orphan CMs + misplaced YAML fields; strict server dry-run to detect; known DR crashloops
 - [WAMS OCR / Jarvis OCR eval](project_jarvis_ocr_poa_eval.md) — replacing Ztrus for WAMS; repo ~/workspaces/jvfs/etc/wams-ocr; baseline POA 33%, DBD 59%, IDs 0% (model self-masks)
 - [Freshdesk middleware](project_freshdesk_middleware.md) — sit-freshdesk on jvfs-sit-cluster; Freshdesk tickets bucket 100/min (overall 400; sync 20/min); attachment URLs expire 300s; never run local sync alongside cluster (advisory lock)
-- [Tako Tour website](project_tako_tour_site.md) — ~/sannonthachai/travel-agency static client preview; kite logo (not squid); sample data; CMS next
+- [Tako Tour website](project_tako_tour_site.md) — ~/sannonthachai/travel-agency (static preview), travel-agency-cms (Next+Payload), travel-agency-php (Laravel+Filament, current, 2026-10-22); kite logo; sample data
 - [jv-cluster Discord DNS bypass](project_jv_cluster_coredns_discord.md) — 192.168.11.1 sinkholes discord; CoreDNS discord zones→8.8.8.8; PROD file only on jvfs-prod-k8s-1 (2026-10-20)

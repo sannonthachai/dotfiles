@@ -1,6 +1,6 @@
 ---
 name: project-tako-tour-site
-description: "Tako Tour travel-agency website (~/sannonthachai/travel-agency) — static client preview built 2026-10-19, CMS planned next"
+description: "Tako Tour travel-agency website — static preview (travel-agency), Next+Payload CMS (travel-agency-cms), now PHP Laravel+Filament rewrite (travel-agency-php, 2026-10-22)"
 metadata:
   node_type: memory
   type: project
@@ -20,3 +20,5 @@ Tako Tour (client: travel agency, Thon Buri, Bangkok; LINE @takoworld, tel 099 4
 
 **Why:** user is showing this to the client first; a CMS to manage content comes later.
 **How to apply:** keep data.js shape CMS-friendly; don't treat sample prices/policies as real; move header/footer to server render when building the real stack.
+
+- Phase 3 (2026-10-22): client has PHP shared hosting, so the two Node services were rewritten as ONE Laravel 13 + Filament 5 app in ~/sannonthachai/travel-agency-php (local git only, no GitHub remote yet; MySQL via compose.dev.yml on 3307; `php artisan serve`). Design decisions + Filament v5 gotchas in that repo's CLAUDE.md; shared-host runbook in docs/DEPLOY.md (Thai). travel-agency-cms stays as reference. PHP 8.5 + composer installed via brew for this.

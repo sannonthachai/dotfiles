@@ -26,4 +26,6 @@ Gotchas:
 
 - 2026-10-09: user wants ONE summary report on the evening of 2026-10-09 covering: prod switch results (auth-api prod switched 2026-10-08 15:53 ICT; 09:00–10:53 tight minutes 76/63 → 6), reconcile done (22 purged tickets marked deleted), queue fix (v0.2.8), remaining 429s only at :11–:12 hourly + 00:11 burst from a consumer outside the middleware (DR auth-api ruled out). Details in the repo CLAUDE.md.
 
+- 2026-10-27: v0.2.12 on SIT, prod, DR (search endpoint `/middleware/v1/tickets/search` + `RECONCILE_EVERY` 24h nightly reconcile, first run SIT 2026-10-27 19:00 ICT). User will check the result on 2026-10-28: (1) sync log `reconcile finished` (`deleted` ≥ 7); (2) compare search `tag=share_doe` ids vs Freshdesk search `tag:'share_doe'` — on 10-27 it was 15 vs 8, extra ids 256943, 258037, 261861, 262573, 264022, 265897, 266475 (256943/258037/266475 verified purged, GET 404). Expect only-mw and only-fd both empty; any id left only in mw → GET it, still 404 = reconcile missed it. Test search via `kubectl port-forward svc/freshdesk-middleware` + key from repo `.env` via `curl -K -`.
+
 **Why:** context for future rollout/prod work. **How to apply:** check these before changing budgets, deploying, or running sync locally. Related: [[project-jvfs-registry-cleanup]]
