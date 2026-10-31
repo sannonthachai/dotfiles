@@ -50,6 +50,7 @@ brew "direnv"           # auto-loads .envrc (huawei-iac OBS checksum env vars)
 # --- GUI apps (casks) ---
 cask "google-chrome"
 cask "wezterm"          # primary terminal emulator
+cask "font-jetbrains-mono-nerd-font"  # WezTerm font (powerlevel10k icons)
 cask "visual-studio-code"
 cask "obsidian"
 cask "tableplus"        # multi-DB GUI (Postgres, MySQL, Redis, SQLite, MS SQL, Mongo)

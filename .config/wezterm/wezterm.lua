@@ -1,11 +1,8 @@
--- WezTerm config — launches WSL with zsh, gruvbox dark, JetBrainsMono Nerd Font
+-- WezTerm config (macOS) — login zsh, gruvbox dark, JetBrainsMono Nerd Font
 -- Docs: https://wezfurlong.org/wezterm/config/files.html
 
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
-
--- Shell: launch WSL Ubuntu directly into zsh in $HOME
-config.default_prog = { 'wsl.exe', '--cd', '~' }
 
 -- Start fullscreen (matches prior Alacritty `startup_mode = "Fullscreen"`)
 wezterm.on('gui-startup', function(cmd)
@@ -70,15 +67,6 @@ config.colors = {
     '#8ec07c',
     '#ebdbb2',
   },
-}
-
--- Keybindings (match Alacritty: Ctrl-Shift-C/V copy/paste, Ctrl +/-/0 font size)
-config.keys = {
-  { key = 'C', mods = 'CTRL|SHIFT', action = wezterm.action.CopyTo 'Clipboard' },
-  { key = 'V', mods = 'CTRL|SHIFT', action = wezterm.action.PasteFrom 'Clipboard' },
-  { key = '=', mods = 'CTRL',       action = wezterm.action.IncreaseFontSize },
-  { key = '-', mods = 'CTRL',       action = wezterm.action.DecreaseFontSize },
-  { key = '0', mods = 'CTRL',       action = wezterm.action.ResetFontSize },
 }
 
 -- Don't beep
