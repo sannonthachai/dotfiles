@@ -48,7 +48,7 @@ brew "minio/stable/mc"  # MinIO/S3-compatible object storage client
 brew "direnv"           # auto-loads .envrc (huawei-iac OBS checksum env vars)
 
 # --- GUI apps (casks) ---
-cask "google-chrome"
+cask "brave-browser"    # primary browser (bookmarks migrated from Chrome 2026-10-31)
 cask "wezterm"          # primary terminal emulator
 cask "font-jetbrains-mono-nerd-font"  # WezTerm font (powerlevel10k icons)
 cask "visual-studio-code"
